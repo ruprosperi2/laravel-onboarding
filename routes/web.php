@@ -19,3 +19,7 @@ Route::get('/', function () {
 Route::get('/manuelCrud', function () {
     return 'manuel';
 });
+
+Route::get('/rubenCrud', function () {
+    return 'ruben';
+});
