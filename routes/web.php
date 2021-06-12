@@ -23,3 +23,7 @@ Route::get('/manuelCrud', function () {
 Route::get('/rubenCrud', function () {
     return 'ruben';
 });
+
+Route::get('/maurelvysCrud', function () {
+    return 'maurelvys';
+});
