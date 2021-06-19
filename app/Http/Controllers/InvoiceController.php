@@ -25,7 +25,18 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $invoice = new Invoice;
+
+        $invoice->supplier = $request->supplier;
+        $invoice->pay_term = $request->pay_term;
+        $invoice->date = $request->date;
+        $invoice->created = $request->created;
+        $invoice->status = $request->status;
+        $invoice->observations = $request->observations;
+
+        $invoice->save();
+
+        return  response()->json($invoice)
     }
 
     /**
