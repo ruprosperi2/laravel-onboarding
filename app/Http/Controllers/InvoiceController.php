@@ -36,7 +36,7 @@ class InvoiceController extends Controller
 
         $invoice->save();
 
-        return  response()->json($invoice)
+        return  response()->json($invoice);
     }
 
     /**
@@ -47,7 +47,7 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
-        //
+        return  response()->json($invoice);
     }
 
     /**
