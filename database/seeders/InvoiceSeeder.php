@@ -24,5 +24,6 @@ class InvoiceSeeder extends Seeder
         $invoice->observations = 'Sin novedad';
 
         $invoice->save();
+
     }
 }

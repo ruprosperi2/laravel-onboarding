@@ -14,17 +14,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json( Invoice::all() );
     }
 
     /**
@@ -45,17 +35,6 @@ class InvoiceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Invoice $invoice)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Invoice  $invoice
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Invoice $invoice)
     {
         //
     }
