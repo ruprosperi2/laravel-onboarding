@@ -45,9 +45,11 @@ class InvoiceController extends Controller
      * @param  \App\Models\Invoice  $invoice
      * @return \Illuminate\Http\Response
      */
-    public function show(Invoice $invoice)
+    public function show($id)
     {
-        return  response()->json($invoice);
+        $invoice = Invoice::find($id);
+
+        return response()->json($invoice);
     }
 
     /**
@@ -68,8 +70,10 @@ class InvoiceController extends Controller
      * @param  \App\Models\Invoice  $invoice
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Invoice $invoice)
+    public function destroy($id)
     {
-        //
+        $invoice = Invoice::find($id);
+
+        $invoice->delete();
     }
 }
