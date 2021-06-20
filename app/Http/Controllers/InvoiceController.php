@@ -59,9 +59,21 @@ class InvoiceController extends Controller
      * @param  \App\Models\Invoice  $invoice
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Invoice $invoice)
+    public function update(Request $request, $id )
     {
-        //
+        $invoice = Invoice::find($id);
+
+        $invoice->supplier = $request->supplier;
+        $invoice->pay_term = $request->pay_term;
+        $invoice->date = $request->date;
+        $invoice->created = $request->created;
+        $invoice->status = $request->status;
+        $invoice->observations = $request->observations;
+
+        $invoice->save();
+
+        return response()->json($invoice);
+
     }
 
     /**
