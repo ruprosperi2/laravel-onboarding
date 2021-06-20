@@ -14,17 +14,7 @@ class InvoiceItemController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json( InvoiceItem::all() );
     }
 
     /**
@@ -45,17 +35,6 @@ class InvoiceItemController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(InvoiceItem $invoiceItem)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\InvoiceItem  $invoiceItem
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(InvoiceItem $invoiceItem)
     {
         //
     }
