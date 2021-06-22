@@ -56,9 +56,19 @@ class InvoiceItemController extends Controller
      * @param  \App\Models\InvoiceItem  $invoiceItem
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, InvoiceItem $invoiceItem)
+    public function update(Request $request, $id)
     {
-        //
+        $invoiceItem = InvoiceItem::find($id);
+
+        $invoiceItem->name = $request->name;
+        $invoiceItem->amount = $request->amount;
+        $invoiceItem->price = $request->price;
+        $invoiceItem->subtotal = $invoiceItem->amount * $invoiceItem->price;
+        $invoiceItem->invoice_id = $request->invoice_id;
+
+        $invoiceItem->save();
+
+        return response()->json($invoiceItem);
     }
 
     /**
