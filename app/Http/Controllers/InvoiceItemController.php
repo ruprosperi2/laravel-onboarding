@@ -44,9 +44,9 @@ class InvoiceItemController extends Controller
      * @param  \App\Models\InvoiceItem  $invoiceItem
      * @return \Illuminate\Http\Response
      */
-    public function show(InvoiceItem $invoiceItem)
+    public function show($id)
     {
-        //
+        return response()->json( InvoiceItem::find($id) );
     }
 
     /**
