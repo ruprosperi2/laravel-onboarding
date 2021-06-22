@@ -25,7 +25,17 @@ class InvoiceItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $invoiceItem = new InvoiceItem;
+
+        $invoiceItem->name = $request->name;
+        $invoiceItem->amount = $request->amount;
+        $invoiceItem->price = $request->price;
+        $invoiceItem->subtotal = $invoiceItem->amount * $invoiceItem->price;
+        $invoiceItem->invoice_id = $request->invoice_id;
+
+        $invoiceItem->save();
+
+        return response()->json($invoiceItem);
     }
 
     /**
