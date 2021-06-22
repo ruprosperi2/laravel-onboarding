@@ -49,6 +49,8 @@ class InvoiceController extends Controller
     {
         $invoice = Invoice::find($id);
 
+        $invoice->invoiceItems;
+
         return response()->json($invoice);
     }
 

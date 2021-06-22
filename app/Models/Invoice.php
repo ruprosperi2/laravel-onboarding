@@ -17,4 +17,8 @@ class Invoice extends Model
         'status',
         'observations'
     ];
+
+    public function invoiceItems(){
+        return  $this->hasMany(InvoiceItem::class);
+    }
 }
