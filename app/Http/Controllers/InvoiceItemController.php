@@ -77,8 +77,8 @@ class InvoiceItemController extends Controller
      * @param  \App\Models\InvoiceItem  $invoiceItem
      * @return \Illuminate\Http\Response
      */
-    public function destroy(InvoiceItem $invoiceItem)
+    public function destroy($id)
     {
-        //
+        InvoiceItem::find($id)->delete();
     }
 }
