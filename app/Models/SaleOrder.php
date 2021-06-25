@@ -12,7 +12,7 @@ class SaleOrder extends Model
     protected $fillable = ['client', 'payment_term', 'creation_date', 'created_by', 'state', 'observation'];
 
     public function items(){
-    	return $this->belongsToMany(Item::class);
+    	return $this->hasMany(OrderItem::class);
     }
 }
- 
+

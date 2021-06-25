@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Item extends Model
+class OrderItem extends Model
 {
     use HasFactory;
 
     protected $fillable = ['name', 'amount', 'price', 'sub_total'];
 
     public function sale_orders(){
-    	return $this->belongsToMany(SaleOrder::class);
+    	return $this->belongsTo(SaleOrder::class);
     }
 }
