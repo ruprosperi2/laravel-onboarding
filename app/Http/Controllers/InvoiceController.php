@@ -77,34 +77,48 @@ class InvoiceController extends Controller
                 'observations' => $request->input('observations')
             ]);
 
+            $invoiceItem =  [];
+
+            foreach ($request->items as $item){
+                $id = InvoiceItem::find($item['id']);
+
+                if( !empty($id) ){
+                    //actualizar
+                    $id->update([
+                        'name' => $item['name'],
+                        'amount' => $item['amount'],
+                        'price' => $item['price'],
+                        'subtotal' => $item['subtotal']
+                    ]);
+                }else{
+                    //crear uno nuevo
+                    $invoiceItem[]= new InvoiceItem($item);
+                }
+
+//                exit;
+//
+//                $invoiceItem->update([
+//                    'name' => $item['name'],
+//                    'amount' => $item['amount'],
+//                    'price' => $item['price'],
+//                    'subtotal' => $item['subtotal']
+//                ]);
+            }
+
+            $invoice->invoiceItems()->saveMany($invoiceItem);
+
+//            if($request->items[0]['id'] == $data[0]['id']){
+//                InvoiceItem->update([
+//                    'name' => $request->input('name'),
+//                    'amount' => $request->input('amount'),
+//                    'price' => $request->input('price'),
+//                    'subtotal' => $request->input('subtotal'),
+//                ]);
+//            }
+
             return response()->json($invoice);
 
         });
-//        foreach ($request->items as $item){
-//            $invoiceItem = InvoiceItem::where('invoice_id', $invoice->id)->first();
-//
-//            $invoiceItem->update([
-//                'name' => $item['name'],
-//                'amount' => $item['amount'],
-//                'price' => $item['price'],
-//                'subtotal' => $item['subtotal']
-//            ]);
-//        }
-//        $invoice->supplier = $request->supplier;
-//        $invoice->pay_term = $request->pay_term;
-//        $invoice->date = $request->date;
-//        $invoice->created = $request->created;
-//        $invoice->status = $request->status;
-//        $invoice->observations = $request->observations;
-
-  //      $invoice->save();
-
-//        foreach ($request->items as $item){
-//
-//        }
-
-
-
     }
 
     /**
