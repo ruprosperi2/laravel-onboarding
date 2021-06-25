@@ -95,27 +95,10 @@ class InvoiceController extends Controller
                     $invoiceItem[]= new InvoiceItem($item);
                 }
 
-//                exit;
-//
-//                $invoiceItem->update([
-//                    'name' => $item['name'],
-//                    'amount' => $item['amount'],
-//                    'price' => $item['price'],
-//                    'subtotal' => $item['subtotal']
-//                ]);
             }
 
             $invoice->invoiceItems()->saveMany($invoiceItem);
-
-//            if($request->items[0]['id'] == $data[0]['id']){
-//                InvoiceItem->update([
-//                    'name' => $request->input('name'),
-//                    'amount' => $request->input('amount'),
-//                    'price' => $request->input('price'),
-//                    'subtotal' => $request->input('subtotal'),
-//                ]);
-//            }
-
+            
             return response()->json($invoice);
 
         });
