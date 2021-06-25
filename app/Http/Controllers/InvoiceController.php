@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
 {
@@ -63,28 +64,32 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, $id )
     {
-        $invoice = Invoice::find($id);
+        DB::transaction( function () use ($request, $id){
 
-        $invoice->update([
-            'supplier' => $request->input('supplier'),
-            'pay_term' => $request->input('pay_term'),
-            'date' => $request->input('date'),
-            'created' => $request->input('created'),
-            'status' => $request->input('status'),
-            'observations' => $request->input('observations')
-        ]);
+            $invoice = Invoice::find($id);
 
-        foreach ($request->items as $item){
-
-            $invoiceItem = InvoiceItem::where('invoice_id', $invoice->id)->first();
-
-            $invoiceItem->update([
-                'name' => $item['name'],
-                'amount' => $item['amount'],
-                'price' => $item['price'],
-                'subtotal' => $item['subtotal']
+            $invoice->update([
+                'supplier' => $request->input('supplier'),
+                'pay_term' => $request->input('pay_term'),
+                'date' => $request->input('date'),
+                'created' => $request->input('created'),
+                'status' => $request->input('status'),
+                'observations' => $request->input('observations')
             ]);
-        }
+
+            return response()->json($invoice);
+
+        });
+//        foreach ($request->items as $item){
+//            $invoiceItem = InvoiceItem::where('invoice_id', $invoice->id)->first();
+//
+//            $invoiceItem->update([
+//                'name' => $item['name'],
+//                'amount' => $item['amount'],
+//                'price' => $item['price'],
+//                'subtotal' => $item['subtotal']
+//            ]);
+//        }
 //        $invoice->supplier = $request->supplier;
 //        $invoice->pay_term = $request->pay_term;
 //        $invoice->date = $request->date;
@@ -98,7 +103,7 @@ class InvoiceController extends Controller
 //
 //        }
 
-        return response()->json($invoice);
+
 
     }
 
