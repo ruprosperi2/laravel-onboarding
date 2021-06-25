@@ -89,6 +89,10 @@ class InvoiceController extends Controller
     {
         $invoice = Invoice::find($id);
 
+        $invoiceItem = InvoiceItem::where('invoice_id', $invoice->id)->delete();
+
         $invoice->delete();
+
+        return response()->json('borrado');
     }
 }
