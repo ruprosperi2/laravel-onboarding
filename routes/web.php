@@ -20,10 +20,3 @@ Route::get('/manuelCrud', function () {
     return 'manuel';
 });
 
-Route::get('/rubenCrud', function () {
-    return 'ruben';
-});
-
-Route::get('/maurelvysCrud', function () {
-    return 'maurelvys';
-});
