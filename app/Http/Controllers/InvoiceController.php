@@ -75,13 +75,14 @@ class InvoiceController extends Controller
         ]);
 
         foreach ($request->items as $item){
+
             $invoiceItem = InvoiceItem::where('invoice_id', $invoice->id)->first();
 
             $invoiceItem->update([
-                'name' => $item->name'),
-                'amount' => $item->input('amount'),
-                'price' => $item->input('price'),
-                'subtotal' => $item->input('subtotal')
+                'name' => $item['name'],
+                'amount' => $item['amount'],
+                'price' => $item['price'],
+                'subtotal' => $item['subtotal']
             ]);
         }
 //        $invoice->supplier = $request->supplier;
