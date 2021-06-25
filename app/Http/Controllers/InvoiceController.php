@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invoice;
+use App\Models\InvoiceItem;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -25,16 +26,16 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        $invoice = new Invoice;
-
-        $invoice->supplier = $request->supplier;
-        $invoice->pay_term = $request->pay_term;
-        $invoice->date = $request->date;
-        $invoice->created = $request->created;
-        $invoice->status = $request->status;
-        $invoice->observations = $request->observations;
-
+        $invoice = Invoice::create( $request->all() );
         $invoice->save();
+
+        $invoiceItems = [];
+
+        foreach ($request->items as $item){
+            $invoiceItems[] = new InvoiceItem($item);
+        }
+
+        $invoice->invoiceItems()->saveMany($invoiceItems);
 
         return  response()->json($invoice);
     }
