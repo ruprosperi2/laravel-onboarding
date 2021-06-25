@@ -27,7 +27,6 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         $invoice = Invoice::create( $request->all() );
-        $invoice->save();
 
         $invoiceItems = [];
 
@@ -66,14 +65,37 @@ class InvoiceController extends Controller
     {
         $invoice = Invoice::find($id);
 
-        $invoice->supplier = $request->supplier;
-        $invoice->pay_term = $request->pay_term;
-        $invoice->date = $request->date;
-        $invoice->created = $request->created;
-        $invoice->status = $request->status;
-        $invoice->observations = $request->observations;
+        $invoice->update([
+            'supplier' => $request->input('supplier'),
+            'pay_term' => $request->input('pay_term'),
+            'date' => $request->input('date'),
+            'created' => $request->input('created'),
+            'status' => $request->input('status'),
+            'observations' => $request->input('observations')
+        ]);
 
-        $invoice->save();
+        foreach ($request->items as $item){
+            $invoiceItem = InvoiceItem::where('invoice_id', $invoice->id)->first();
+
+            $invoiceItem->update([
+                'name' => $item->name'),
+                'amount' => $item->input('amount'),
+                'price' => $item->input('price'),
+                'subtotal' => $item->input('subtotal')
+            ]);
+        }
+//        $invoice->supplier = $request->supplier;
+//        $invoice->pay_term = $request->pay_term;
+//        $invoice->date = $request->date;
+//        $invoice->created = $request->created;
+//        $invoice->status = $request->status;
+//        $invoice->observations = $request->observations;
+
+  //      $invoice->save();
+
+//        foreach ($request->items as $item){
+//
+//        }
 
         return response()->json($invoice);
 
