@@ -10,12 +10,12 @@ class ItemsRequest extends Model
     use HasFactory;
 
     protected $guarded =['id'];
-    protected $table="items_requests";
+    protected $table="itemsrequests";
     protected $fillable=['product_name','amount'];
 
     public function requestOrder(){
 
-        return $this->hasMany(RequestOrder::class);
+        return $this->belongsTo(RequestOrder::class);
 
     }
 }

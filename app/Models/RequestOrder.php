@@ -15,6 +15,6 @@ class RequestOrder extends Model
 
     public function itemsRequests(){
 
-        return $this->belongsTo(ItemsRequest::class);
+        return $this->hasMany(ItemsRequest::class, 'request_id');
     }
 }
