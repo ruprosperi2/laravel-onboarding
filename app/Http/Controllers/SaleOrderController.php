@@ -58,9 +58,10 @@ class SaleOrderController extends Controller
      * @param  \App\Models\SaleOrder  $saleOrder
      * @return \Illuminate\Http\Response
      */
-    public function show(SaleOrder $saleOrder)
+    public function show($id)
     {
-        //        
+        $items_sale_orders = SaleOrder::with('items')->find($id);
+        return response()->json($items_sale_orders);
     }
     /**
      * Show the form for editing the specified resource.
@@ -82,33 +83,12 @@ class SaleOrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        DB::transaction( function () use ($request, $id){
-            $sale_order_id = SaleOrder::find($id);
-            $sale_order_id->client =  $request->client;
-            $sale_order_id->payment_term = $request->payment_term;
-            $sale_order_id->creation_date = $request->creation_date;
-            $sale_order_id->created_by = $request->created_by;
-            $sale_order_id->state = $request->state;
-            $sale_order_id->observation = $request->observation;
+        DB::transaction(function () use ($request, $id){
+            SaleOrder::find($id)->update($request->except('items'));
             
-            $sale_order_id->save();
-
-            $order_items = [];
-
             foreach($request->items as $items){
-                $order_item_id = OrderItem::find($items['id']);
-                if(!empty($order_item_id)){
-                    $order_item_id->name = $items['name'];
-                    $order_item_id->amount = $items['amount'];
-                    $order_item_id->price = $items['price'];
-                    $order_item_id->sub_total = $items['sub_total'];
-                    $order_item_id->save();
-                }
-                else{
-                    $order_items[] = new OrderItem($items);
-                }
+                OrderItem::updateOrCreate(['id' => $items['id']], $items);
             }
-            $sale_order_id->items()->saveMany($order_items);   
         });
     }
 
@@ -121,7 +101,6 @@ class SaleOrderController extends Controller
     public function destroy($id)
     {
         $sale_order_id = SaleOrder::find($id);
-        $order_item = OrderItem::where('sale_order_id', $sale_order_id)->delete();
         $sale_order_id->delete();
     }
 }
