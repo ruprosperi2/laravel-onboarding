@@ -18,4 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('/sinfony', \App\Http\Controllers\RequestOrderController::class);
+Route::apiResource('/request_order_api', \App\Http\Controllers\RequestOrderController::class);
