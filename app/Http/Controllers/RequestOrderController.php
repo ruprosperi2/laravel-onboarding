@@ -14,9 +14,6 @@ class RequestOrderController extends Controller
     {
         $dataRequestOrder = RequestOrder::with('itemsRequests')->get();
         return response()->json($dataRequestOrder);
-        /*        $dataRequestOrder = RequestOrder::all();
-                return response()->json($dataRequestOrder);
-          */
     }
 
 
