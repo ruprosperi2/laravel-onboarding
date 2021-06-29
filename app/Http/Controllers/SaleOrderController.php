@@ -49,6 +49,7 @@ class SaleOrderController extends Controller
         }
 
         $sale_order->items()->saveMany($order_items);
+        
     }
 
 
