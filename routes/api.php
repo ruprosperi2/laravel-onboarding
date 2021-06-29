@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\InvoiceItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\SaleOrderController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,8 +16,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::apiResource('invoices', InvoiceController::class);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+<<<<<<< HEAD
 Route::apiResource('/request_order_api', \App\Http\Controllers\RequestOrderController::class);
+=======
+Route::resource('sale_order', SaleOrderController::class);
+
+>>>>>>> 97653ab6a3ef781ed35987d81b528f72a7c8391d
