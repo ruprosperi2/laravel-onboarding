@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\OrderItem;
+use App\Models\PurchaseItem;
 use App\Models\PurchaseOrder;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -37,7 +38,7 @@ class PurchaseOrderController extends Controller
 
         foreach ($request->dataItems as $dataItems) {
 
-            $itemsPurchase[] = new OrderItem($dataItems);
+            $itemsPurchase[] = new PurchaseItem($dataItems);
 
             $dataOrder->itemsTable()->saveMany($itemsPurchase);
 
@@ -74,11 +75,11 @@ class PurchaseOrderController extends Controller
 
         foreach ($request->dataItems as $dataItems) {
 
-            $items = OrderItem::find($dataItems["id"]);
+            $items = PurchaseItem::find($dataItems["id"]);
 
             if (empty($items)) {
 
-                $itemsPurchase[] = new OrderItem($dataItems);
+                $itemsPurchase[] = new PurchaseItem($dataItems);
 
             } else {
 
@@ -98,7 +99,7 @@ class PurchaseOrderController extends Controller
 
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
 
         PurchaseOrder::with('itemsTable')->find($id)->delete();

@@ -24,6 +24,6 @@ class PurchaseOrder extends Model
     public function itemsTable()
     {
 
-        return $this->hasMany(OrderItem::class);
+        return $this->hasMany(PurchaseItem::class);
     }
 }
