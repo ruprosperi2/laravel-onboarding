@@ -16,14 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-//Route::get('/manuelCrud', function () {
-//    return 'manuel';
-//});
-//
-//Route::get('/rubenCrud', function () {
-//    return 'ruben';
-//});
-//
-//Route::get('/maurelvysCrud', function () {
-//    return 'maurelvys';
-//});
+
+Route::get('/rubenCrud', function () {
+    return 'ruben';
+});
+Route::get('/maurelvysCrud', function () {
+    return 'maurelvys';
+});

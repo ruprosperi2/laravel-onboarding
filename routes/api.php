@@ -22,5 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::apiResource('/request_order_api', \App\Http\Controllers\RequestOrderController::class);
+
 Route::resource('sale_order', SaleOrderController::class);
 
