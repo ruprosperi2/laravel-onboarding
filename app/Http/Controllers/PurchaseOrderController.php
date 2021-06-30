@@ -90,14 +90,16 @@ class PurchaseOrderController extends Controller
                 $items->save();
             }
 
-
         }
+
         $dataOrder->itemsTable()->saveMany($itemsPurchase);
+
         return response()->json("Los datos han sido actualizados exitosamente");
 
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
 
         PurchaseOrder::with('itemsTable')->find($id)->delete();
 
