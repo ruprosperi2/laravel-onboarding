@@ -43,7 +43,7 @@ class FeatureContext implements Context
     }
 
     /**
-     * @When I post to :arg1
+     * @When I post to :uri
      */
     public function iPostTo($uri)
     {
@@ -53,7 +53,7 @@ class FeatureContext implements Context
     }
 
     /**
-     * @Then the response code is :arg1
+     * @Then the response code is :code
      */
     public function theResponseCodeIs($code)
     {
@@ -69,7 +69,7 @@ class FeatureContext implements Context
     }
 
     /**
-     * @When I put to :arg1
+     * @When I put to :uri
      */
     public function iPutTo($uri)
     {
@@ -79,7 +79,7 @@ class FeatureContext implements Context
     }
 
     /**
-     * @Given the delete id is :arg1
+     * @Given the delete id is :id
      */
     public function theDeleteIdIs($id)
     {
@@ -87,12 +87,29 @@ class FeatureContext implements Context
     }
 
     /**
-     * @Then I want to delete on :arg1
+     * @Then I want to delete on :uri
      */
     public function iWantToDeleteOn($uri)
     {
         $this->response = $this->client->delete($uri . $this->deleteId);
     }
 
+    /**
+     * @Given I get to :uri
+     */
+    public function iGetTo($uri)
+    {
+        $this->response = $this->client->get($uri);
+    }
 
+    /**
+     * @Then count at least :number sale order
+     */
+    public function countAtLeastSaleOrder($number)
+    {
+        $sale_order = json_decode($this->response->getBody()->getContents(), true);
+
+        return count($sale_order) >= $number;
+    }
+    
 }
