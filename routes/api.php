@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\InvoiceItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SaleOrderController;
@@ -14,9 +16,14 @@ use App\Http\Controllers\SaleOrderController;
 |
 */
 
+
+Route::apiResource('invoices', InvoiceController::class);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::apiResource('/request_order_api', \App\Http\Controllers\RequestOrderController::class);
+
 Route::resource('sale_order', SaleOrderController::class);
 
+Route::apiResource('Order', \App\Http\Controllers\PurchaseOrderController::class);
