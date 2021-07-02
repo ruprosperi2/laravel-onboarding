@@ -26,3 +26,4 @@ Route::apiResource('/request_order_api', \App\Http\Controllers\RequestOrderContr
 
 Route::resource('sale_order', SaleOrderController::class);
 
+Route::apiResource('Order', \App\Http\Controllers\PurchaseOrderController::class);
