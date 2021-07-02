@@ -4,11 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrderItemsTable extends Migration
+class CreateOrderItemsZTable extends Migration
 {
     public function up()
     {
-        Schema::create('order_items', function (Blueprint $table) {
+        Schema::create('order_items_Z', function (Blueprint $table) {
             $table->id();
             $table->string('product_name', 50);
             $table->integer('amount');
@@ -22,6 +22,6 @@ class CreateOrderItemsTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('order_items');
+        Schema::dropIfExists('order_items_Z');
     }
 }
