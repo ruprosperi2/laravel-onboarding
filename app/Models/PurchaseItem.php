@@ -9,21 +9,9 @@ class PurchaseItem extends Model
 {
     use HasFactory;
 
-    protected $table = "order_items";
 
-    protected $fillable = [
+    protected $fillable = ['name', 'amount', 'price', 'sub_total', 'sale_order_id'];
 
-        'product_name',
-        'amount',
-        'price',
-        'subtotal',
-    ];
-
-    public function orderTable()
-    {
-        return $this->belongsTo(PurchaseOrder::class);
-
-    protected $fillable = ['name', 'amount', 'price', 'sub_total'];
 
     public function sale_orders(){
     	return $this->belongsTo(SaleOrder::class);

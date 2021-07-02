@@ -1,0 +1,4 @@
+default:
+    suites:
+        api:
+            paths:    [ '%paths.base%/features/api' ]
