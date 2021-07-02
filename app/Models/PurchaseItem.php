@@ -23,10 +23,5 @@ class PurchaseItem extends Model
     {
         return $this->belongsTo(PurchaseOrder::class);
 
-    protected $fillable = ['name', 'amount', 'price', 'sub_total'];
-
-    public function sale_orders(){
-    	return $this->belongsTo(SaleOrder::class);
-
     }
 }
