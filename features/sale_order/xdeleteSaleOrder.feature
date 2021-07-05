@@ -4,3 +4,4 @@ Feature:
 Scenario: Delete a sale order
 	Given the delete id is 1
     Then I want to delete on "api/sale_order/"
+    Then I want to truncate the sale_order and items tables

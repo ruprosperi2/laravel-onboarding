@@ -1,7 +1,8 @@
 <?php
 
 use Behat\Behat\Tester\Exception\PendingException;
-
+use Tests\TestCase;
+use Illuminate\Support\Facades\DB;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
@@ -11,7 +12,7 @@ use GuzzleHttp\RequestOptions;
 /**
  * Defines application features from the specific context.
  */
-class SaleOrderContext implements Context
+class SaleOrderContext extends TestCase implements Context
 {
     const URL = "http://localhost/laravel-onboarding/public/";
     private $client;
@@ -29,6 +30,8 @@ class SaleOrderContext implements Context
      */
     public function __construct()
     {
+        parent::setup();
+
         $this->client = new Client([
             "base_uri" => self::URL
         ]);
@@ -111,5 +114,15 @@ class SaleOrderContext implements Context
 
         return count($sale_order) >= $number;
     }
-    
+
+    /**
+     * @Then I want to truncate the sale_order and items tables
+     */
+    public function iWantToTruncateTheSaleOrderAndItemsTables()
+    {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('sale_orders')->truncate();
+        DB::table('order_items')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+    }    
 }
