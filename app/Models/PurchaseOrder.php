@@ -12,7 +12,6 @@ class PurchaseOrder extends Model
     protected $table = "purchase_orders";
 
     protected $fillable = [
-
         'date',
         'created_by',
         'supplier',
