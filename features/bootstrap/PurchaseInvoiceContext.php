@@ -4,12 +4,20 @@ use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
+use GuzzleHttp\Client;
+use GuzzleHttp\RequestOptions;
 
 /**
  * Defines application features from the specific context.
  */
 class PurchaseInvoiceContext implements Context
 {
+    Const URL = "http://localhost/";
+    private $client;
+    private $body;
+    private $response;
+    private $reason;
+
     /**
      * Initializes context.
      *
@@ -19,29 +27,34 @@ class PurchaseInvoiceContext implements Context
      */
     public function __construct()
     {
+        $this->client = new Client([
+           "base_uri" => self::URL
+        ]);
     }
 
     /**
      * @Given The request body:
      */
-    public function theRequestBody(PyStringNode $string)
+    public function theRequestBody(PyStringNode $body)
     {
-        throw new PendingException();
+        $this->body = $body;
     }
 
     /**
-     * @When I post to :arg1
+     * @When I post to :uri
      */
-    public function iPostTo($arg1)
+    public function iPostTo($uri)
     {
-        throw new PendingException();
+        $this->response = $this->client->post($uri,[
+            RequestOptions::JSON => [$this->body]
+        ]);
     }
 
     /**
-     * @Then the response reason is :arg1
+     * @Then the response reason is :message
      */
-    public function theResponseReasonIs($arg1)
+    public function theResponseReasonIs($message)
     {
-        throw new PendingException();
+        return $this->response->getReasonPhrase() == $message;
     }
 }
