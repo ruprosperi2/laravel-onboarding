@@ -58,4 +58,34 @@ class PurchaseInvoiceContext implements Context
     {
         return $this->response->getReasonPhrase() == $message;
     }
+
+
+    /**
+     * @When enter to :uri
+     */
+    public function enterTo($uri)
+    {
+        $this->response = $this->client->get($uri);
+    }
+
+
+    /**
+     * @Then the response code is :code
+     */
+    public function theResponseCodeIs($code)
+    {
+        return $this->response->getStatusCode() == $code;
+    }
+
+
+
+    /**
+     * @Then the response reason phrase is “OK”
+     */
+    public function theResponseReasonPhraseIsOk()
+    {
+        if($this->response->getReasonPhrase() != "OK"){
+            throw new Exception("Error");
+        }
+    }
 }
