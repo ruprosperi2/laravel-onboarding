@@ -1,5 +1,5 @@
 Feature: testing the creation of a purchase invoices
-@create
+@createPurchaseInvoice
 Scenario: create a purchase invoices
     Given The request body:
     """
