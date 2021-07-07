@@ -4,7 +4,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\InvoiceItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SaleOrderController;
+use App\Http\Controllers\SaleOrderPostController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,6 +24,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::apiResource('/request_order_api', \App\Http\Controllers\RequestOrderController::class);
 
-Route::resource('sale_order', SaleOrderController::class);
+//Route::resource('sale_order', SaleOrderController::class);
+
+Route::post('sale_order', SaleOrderPostController::class);
 
 Route::apiResource('Order', \App\Http\Controllers\PurchaseOrderController::class);
