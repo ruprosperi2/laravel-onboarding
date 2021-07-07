@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\SaleOrderControllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\SaleOrder;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
@@ -9,8 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 class SaleOrderPostController extends Controller
 {
-    
-
     public function __invoke(Request $request){
 
         $sale_order = SaleOrder::create($request->all());
