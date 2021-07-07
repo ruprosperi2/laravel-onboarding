@@ -12,7 +12,7 @@ use GuzzleHttp\RequestOptions;
  */
 class PurchaseInvoiceContext implements Context
 {
-    Const URL = "http://localhost/";
+    const URL = "http://localhost/";
     private $client;
     private $body;
     private $response;
@@ -30,6 +30,7 @@ class PurchaseInvoiceContext implements Context
         $this->client = new Client([
            "base_uri" => self::URL
         ]);
+
     }
 
     /**
@@ -46,7 +47,7 @@ class PurchaseInvoiceContext implements Context
     public function iPostTo($uri)
     {
         $this->response = $this->client->post($uri,[
-            RequestOptions::JSON => [$this->body]
+            RequestOptions::JSON => json_decode($this->body) // Convierte un string codificado en JSON a una variable de PHP
         ]);
     }
 
