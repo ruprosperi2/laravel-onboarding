@@ -18,12 +18,10 @@ class SaleOrderRepository implements SaleOrderRepositoryInterface
 	{
 
 		$sale_order = $this->saleOrder::create($request->all());
-		$sale_order->save();
-		$order_items = [];
 
-        foreach($request->items as $items){
-            $order_items[] = new OrderItem($items);
-        }
+		$order_items = collect($request->items)->map(function($item){
+			return new OrderItem($item);
+		});
 
         $sale_order->items()->saveMany($order_items);
 	}
