@@ -9,9 +9,10 @@ class PurchaseItem extends Model
 {
     use HasFactory;
 
-    protected $table= "purchase_order_items";
+    protected $table = "order_items_Z";
 
     protected $fillable = [
+
         'product_name',
         'amount',
         'price',
