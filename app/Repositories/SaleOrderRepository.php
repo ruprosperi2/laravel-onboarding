@@ -3,8 +3,8 @@ namespace App\Repositories;
 
 use App\Models\SaleOrder;
 use App\Models\OrderItem;
+use App\Repositories\Interfaces\SaleOrderRepositoryInterface;
 use Illuminate\Support\Facades\DB;
-
 class SaleOrderRepository implements SaleOrderRepositoryInterface
 {
 	protected $saleOrder;
@@ -20,7 +20,7 @@ class SaleOrderRepository implements SaleOrderRepositoryInterface
 			$sale_order = $this->saleOrder::create($request->all());
 			
 			$order_items = collect($request->items)->map(function($item){
-			return new OrderItem($item);
+				return new OrderItem($item);
 			});
 			
 			$sale_order->items()->saveMany($order_items);
@@ -47,6 +47,12 @@ class SaleOrderRepository implements SaleOrderRepositoryInterface
 	public function delete($id)
 	{
 		$this->saleOrder::find($id)->delete();
+	}
+
+	public function readById($id)
+	{
+		$items_sale_orders = $this->saleOrder::with('items')->find($id);
+        return response()->json($items_sale_orders);
 	}
 }
 
