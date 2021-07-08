@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\SaleOrderRepositoryInterface;
 
-class SaleOrderPostController extends Controller
+class SaleOrderPutController extends Controller
 {
 	private $repository;
 
-    public function __invoke(Request $request, SaleOrderRepositoryInterface $repository){
+    public function __invoke(Request $request, SaleOrderRepositoryInterface $repository, $id){
     	$this->repository = $repository;
-    	$this->repository->create($request);
+    	$this->repository->update($request, $id);
     }
 }
