@@ -16,7 +16,7 @@ class PurchaseInvoiceContext implements Context
     private $client;
     private $body;
     private $response;
-    private $reason;
+    private $id;
 
     /**
      * Initializes context.
@@ -86,6 +86,37 @@ class PurchaseInvoiceContext implements Context
     {
         if($this->response->getReasonPhrase() != "OK"){
             throw new Exception("Error");
+        }
+    }
+
+    /**
+     * @Given the id: :id
+     */
+    public function theId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @When you navigate to :uri
+     */
+    public function youNavigateTo($uri)
+    {
+        $route = $uri."/".$this->id;
+        $this->response =  json_decode($this->client->get($route)->getBody(), true);
+
+        dd($this->response);
+
+    }
+
+
+    /**
+     * @Then the body is a JSON array of length :arg1
+     */
+    public function theBodyIsAJsonArrayOfLength($arg1)
+    {
+        if( count($this->response) != $arg1 ){
+            throw new Exception("Result no found");
         }
     }
 }
