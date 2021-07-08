@@ -16,14 +16,15 @@ class SaleOrderRepository implements SaleOrderRepositoryInterface
 
 	public function create($request)
 	{
-
-		$sale_order = $this->saleOrder::create($request->all());
-
-		$order_items = collect($request->items)->map(function($item){
+		DB::transaction(function () use ($request){
+			$sale_order = $this->saleOrder::create($request->all());
+			
+			$order_items = collect($request->items)->map(function($item){
 			return new OrderItem($item);
+			});
+			
+			$sale_order->items()->saveMany($order_items);
 		});
-
-        $sale_order->items()->saveMany($order_items);
 	}
 
 	public function read()
