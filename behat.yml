@@ -1,4 +1,10 @@
 default:
     suites:
+
         api:
             paths:    [ '%paths.base%/features/api' ]
+
+        sale_order_features:
+            paths:    [ '%paths.base%/features/sale_order' ]
+            contexts: [ 'SaleOrderContext' ]
+
