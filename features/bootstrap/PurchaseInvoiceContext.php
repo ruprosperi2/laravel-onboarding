@@ -103,20 +103,29 @@ class PurchaseInvoiceContext implements Context
     public function youNavigateTo($uri)
     {
         $route = $uri."/".$this->id;
-        $this->response =  json_decode($this->client->get($route)->getBody(), true);
+        $this->response =  ($this->client->get($route));
 
-        dd($this->response);
+    }
 
+    /**
+     * @Then the expected response is a code :code
+     */
+    public function theExpectedResponseIsACode($code)
+    {
+        return $this->response->getStatusCode() == $code;
     }
 
 
     /**
-     * @Then the body is a JSON array of length :arg1
+     * @Then the response body is a array with a length of at least :arg1
      */
-    public function theBodyIsAJsonArrayOfLength($arg1)
+    public function theResponseBodyIsAJsonArrayWithALengthOfAtLeast($arg1)
     {
-        if( count($this->response) != $arg1 ){
+        $array = json_decode($this->response->getBody(), true);
+        if( !count($array) >= $arg1 ){
             throw new Exception("Result no found");
         }
     }
+
+
 }
