@@ -35,4 +35,4 @@ Route::put('sale_order/{id}', SaleOrderPutController::class);
 
 Route::delete('sale_order/{id}', SaleOrderDeleteController::class);
 
-Route::apiResource('Order', \App\Http\Controllers\PurchaseOrderController::class);
+Route::apiResource('purchaseOrder', \App\Http\Controllers\PurchaseOrderController::class);

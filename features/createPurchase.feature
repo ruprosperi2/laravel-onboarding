@@ -5,7 +5,7 @@ Feature: create
     I need to be able to place a new order and its items
 
     Scenario: create purchase order
-        Given I have data to carry out the order:
+        Given I create a purchase order:
             """
         {
             "date": "2021-06-26",
@@ -40,11 +40,6 @@ Feature: create
         }
             """
 
-        When The information is sends to "api/Order"
-        Then send "successfully created" message
-
-
-
-
-
+        When Send to "api/purchaseOrder"
+        Then send successfully created message
 
