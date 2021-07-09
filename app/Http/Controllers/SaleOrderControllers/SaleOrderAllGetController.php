@@ -5,7 +5,7 @@ namespace App\Http\Controllers\SaleOrderControllers;
 use App\Http\Controllers\Controller;
 use App\Repositories\Interfaces\SaleOrderRepositoryInterface;
 
-class SaleOrderGetAllController extends Controller
+class SaleOrderAllGetController extends Controller
 {
 	private $repository;
 

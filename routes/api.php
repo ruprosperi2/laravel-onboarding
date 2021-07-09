@@ -8,7 +8,7 @@ use App\Http\Controllers\SaleOrderControllers\SaleOrderPostController;
 use App\Http\Controllers\SaleOrderControllers\SaleOrderPutController;
 use App\Http\Controllers\SaleOrderControllers\SaleOrderDeleteController;
 use App\Http\Controllers\SaleOrderControllers\SaleOrderGetController;
-use App\Http\Controllers\SaleOrderControllers\SaleOrderGetAllController;
+use App\Http\Controllers\SaleOrderControllers\SaleOrderAllGetController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,7 +28,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::apiResource('/request_order_api', \App\Http\Controllers\RequestOrderController::class);
 
-Route::get('sale_order', SaleOrderGetAllController::class);
+Route::get('sale_order', SaleOrderAllGetController::class);
 
 Route::post('sale_order', SaleOrderPostController::class);
 
