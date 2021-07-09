@@ -128,4 +128,31 @@ class PurchaseInvoiceContext implements Context
     }
 
 
+    /**
+     * @Given I want to delete a purchase with id :id
+     */
+    public function iWantToDeleteAPurchaseWithId2($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @When you navigate to :uri with the delete method
+     */
+    public function youNavigateToWithTheDeleteMethod($uri)
+    {
+        $route = $uri."/".$this->id;
+        $this->response =  ($this->client->delete($route));
+    }
+
+    /**
+     * @Then the expected response is a :arg1
+     */
+    public function theExpectedResponseIsA($arg1)
+    {
+        if( $arg1 != "OK"){
+            throw new Exception("404 Not Found");
+        }
+    }
+
 }
