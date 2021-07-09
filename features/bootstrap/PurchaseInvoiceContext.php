@@ -155,4 +155,33 @@ class PurchaseInvoiceContext implements Context
         }
     }
 
+
+
+    /**
+     * @Given The id :id for update
+     */
+    public function theIdForUpdate($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @Given The request body for update:
+     */
+    public function theRequestBodyForUpdate(PyStringNode $body)
+    {
+        $this->body = $body;
+    }
+
+    /**
+     * @When you navigate to :uri with the put method
+     */
+    public function youNavigateToWithThePutMethod($uri)
+    {
+        $route = $uri."/".$this->id;
+        $this->response = $this->client->put($route,[
+            RequestOptions::JSON => json_decode($this->body,true) // Convierte un string codificado en JSON a una variable de PHP
+        ]);
+
+    }
 }
