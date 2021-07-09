@@ -3,8 +3,8 @@ namespace App\Repositories;
 
 use App\Models\SaleOrder;
 use App\Models\OrderItem;
+use App\Repositories\Interfaces\SaleOrderRepositoryInterface;
 use Illuminate\Support\Facades\DB;
-
 class SaleOrderRepository implements SaleOrderRepositoryInterface
 {
 	protected $saleOrder;
@@ -16,16 +16,15 @@ class SaleOrderRepository implements SaleOrderRepositoryInterface
 
 	public function create($request)
 	{
-
-		$sale_order = $this->saleOrder::create($request->all());
-		$sale_order->save();
-		$order_items = [];
-
-        foreach($request->items as $items){
-            $order_items[] = new OrderItem($items);
-        }
-
-        $sale_order->items()->saveMany($order_items);
+		DB::transaction(function () use ($request){
+			$sale_order = $this->saleOrder::create($request->all());
+			
+			$order_items = collect($request->items)->map(function($item){
+				return new OrderItem($item);
+			});
+			
+			$sale_order->items()->saveMany($order_items);
+		});
 	}
 
 	public function read()
@@ -48,6 +47,12 @@ class SaleOrderRepository implements SaleOrderRepositoryInterface
 	public function delete($id)
 	{
 		$this->saleOrder::find($id)->delete();
+	}
+
+	public function readById($id)
+	{
+		$items_sale_orders = $this->saleOrder::with('items')->find($id);
+        return response()->json($items_sale_orders);
 	}
 }
 

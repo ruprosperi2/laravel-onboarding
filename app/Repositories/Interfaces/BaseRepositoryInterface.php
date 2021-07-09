@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Interfaces;
 
-interface SaleOrderRepositoryInterface
+interface BaseRepositoryInterface
 {
     public function create(array $data);
 
@@ -11,4 +11,6 @@ interface SaleOrderRepositoryInterface
     public function update(array $data, $id);
 
     public function delete($id);
+
+    public function readById($id);
 }
