@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\SaleOrderControllers;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\Interfaces\SaleOrderRepositoryInterface;
+use App\Services\Interfaces\SaleOrderServiceInterface;
 
 class SaleOrderGetController extends Controller
 {
-	private $repository;
+	private $service;
 
-    public function __invoke( SaleOrderRepositoryInterface $repository, $id){
-    	$this->repository = $repository;
-    	return $this->repository->readById($id);
+    public function __invoke( SaleOrderServiceInterface $service, $id){
+    	$this->service = $service;
+    	return $this->service->readById($id);
     }
 }
