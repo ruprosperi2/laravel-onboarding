@@ -10,6 +10,8 @@ use App\Http\Controllers\SaleOrderControllers\SaleOrderGetController;
 use App\Http\Controllers\SaleOrderControllers\SaleOrderAllGetController;
 
 use App\Http\Controllers\InvoiceControllers\InvoiceGetAllController;
+use App\Http\Controllers\InvoiceControllers\InvoiceGetController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -41,3 +43,5 @@ Route::apiResource('Order', \App\Http\Controllers\PurchaseOrderController::class
 
 /*Facturas de Compra*/
 Route::get('invoices', InvoiceGetAllController::class);
+
+Route::get('invoice/{id}', InvoiceGetController::class);
