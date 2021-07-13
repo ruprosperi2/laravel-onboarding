@@ -12,6 +12,7 @@ use App\Http\Controllers\SaleOrderControllers\SaleOrderAllGetController;
 use App\Http\Controllers\InvoiceControllers\InvoiceGetAllController;
 use App\Http\Controllers\InvoiceControllers\InvoiceGetController;
 use App\Http\Controllers\InvoiceControllers\InvoicePostController;
+use App\Http\Controllers\InvoiceControllers\InvoiceDeleteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,3 +49,5 @@ Route::get('invoice', InvoiceGetAllController::class);
 Route::get('invoice/{id}', InvoiceGetController::class);
 
 Route::post('invoice', InvoicePostController::class);
+
+Route::delete('invoice/{id}', InvoiceDeleteController::class);
