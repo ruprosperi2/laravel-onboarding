@@ -1,25 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\InvoiceControllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class InvoiceController extends Controller
+class InvoicePutController extends Controller
 {
-
     /**
-     * Update the specified resource in storage.
+     * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Invoice  $invoice
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id )
+    public function __invoke(Request $request, $id)
     {
-        DB::transaction( function () use ($request, $id){
+        DB::transaction(function () use ($request, $id) {
 
             $invoice = Invoice::find($id);
 
@@ -32,12 +30,12 @@ class InvoiceController extends Controller
                 'observations' => $request->input('observations')
             ]);
 
-            $invoiceItem =  [];
+            $invoiceItem = [];
 
-            foreach ($request->items as $item){
+            foreach ($request->items as $item) {
                 $id = InvoiceItem::find($item['id']);
 
-                if( !empty($id) ){
+                if (!empty($id)) {
                     //actualizar
                     $id->update([
                         'name' => $item['name'],
@@ -45,19 +43,17 @@ class InvoiceController extends Controller
                         'price' => $item['price'],
                         'subtotal' => $item['subtotal']
                     ]);
-                }else{
+                } else {
                     //crear uno nuevo
-                    $invoiceItem[]= new InvoiceItem($item);
+                    $invoiceItem[] = new InvoiceItem($item);
                 }
 
             }
 
             $invoice->invoiceItems()->saveMany($invoiceItem);
 
-            return response()->json($invoice);
+            return http_response_code(201);
 
         });
     }
-
-
 }
