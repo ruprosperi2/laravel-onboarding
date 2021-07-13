@@ -9,51 +9,6 @@ use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return response()->json( Invoice::all() );
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $invoice = Invoice::create( $request->all() );
-
-        $invoiceItems = [];
-
-        foreach ($request->items as $item){
-            $invoiceItems[] = new InvoiceItem($item);
-        }
-
-        $invoice->invoiceItems()->saveMany($invoiceItems);
-
-        return  response()->json($invoice);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Invoice  $invoice
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $invoice = Invoice::find($id);
-
-        $invoice->invoiceItems;
-
-        return response()->json($invoice);
-    }
 
     /**
      * Update the specified resource in storage.
@@ -98,7 +53,7 @@ class InvoiceController extends Controller
             }
 
             $invoice->invoiceItems()->saveMany($invoiceItem);
-            
+
             return response()->json($invoice);
 
         });
