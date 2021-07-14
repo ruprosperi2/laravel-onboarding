@@ -6,3 +6,7 @@ default:
         purchase_invoice_features:
           paths: [ '%paths.base%/features/purchase_invoice' ]
           contexts: [ 'PurchaseInvoiceContext' ]
+
+        request_order_features:
+            paths: [ '%paths.base%/features/request_order' ]
+            contexts: [ 'RequestOrderContext' ]
