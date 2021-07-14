@@ -34,5 +34,5 @@ Scenario: create a purchase invoices
     ]
 }
     """
-    When I post to "api/invoices"
+    When I post to "api/invoice"
     Then the response reason is "OK"

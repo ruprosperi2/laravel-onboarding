@@ -33,5 +33,5 @@ Feature: testing the update of a purchase invoices
         ]
     }
     """
-        When you navigate to "api/invoices" with the put method
+        When you navigate to "api/invoice" with the put method
         Then the expected response is a code 201
