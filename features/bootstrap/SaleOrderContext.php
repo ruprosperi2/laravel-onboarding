@@ -14,7 +14,7 @@ use GuzzleHttp\RequestOptions;
  */
 class SaleOrderContext extends TestCase implements Context
 {
-    const URL = "http://localhost/laravel-onboarding/public/";
+    const URL = "http://localhost/";
     private $client;
     private $body;
     private $action;
@@ -124,5 +124,5 @@ class SaleOrderContext extends TestCase implements Context
         DB::table('sale_orders')->truncate();
         DB::table('order_items')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-    }    
+    }
 }

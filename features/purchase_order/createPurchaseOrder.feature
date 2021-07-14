@@ -1,4 +1,4 @@
-@create
+@createPurchase
 Feature: create
     To make a purchase order
     As a user with permissions,
@@ -9,29 +9,26 @@ Feature: create
             """
         {
             "date": "2021-06-26",
-            "created_by": "Mauricio",
-            "supplier": "Limpiatodo",
-            "payment_term": "Sin descuento",
+            "created_by": "Mauri",
+            "supplier": "Limpia",
+            "payment_term": "descuento",
             "status": "entregado",
             "observations": "orden entregada",
             "dataItems": [
                     {
-                        "id": 1,
-                        "product_name": "KKKKK",
+                        "product_name": "kilo",
                         "amount": 1,
                         "price": 300,
                         "subtotal": 300
                     },
                     {
-                        "id": 2,
-                        "product_name": "JJJJJJ",
+                        "product_name": "masa",
                         "amount": 1,
                         "price": 1500,
                         "subtotal": 1500
                     },
                     {
-                        "id": 3,
-                        "product_name": "HHHHHHH",
+                        "product_name": "liquido",
                         "amount": 1,
                         "price": 1500,
                         "subtotal": 1500
@@ -41,5 +38,4 @@ Feature: create
             """
 
         When Send to "api/purchaseOrder"
-        Then send successfully created message
-
+        Then I should see the text "successfully created"
