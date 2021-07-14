@@ -1,8 +1,8 @@
 @deleteRequestOrder
-Feature: testing the delete of a purchase invoice
+Feature: I am going to delete a request order to test an API
 
-    Scenario: delete a purchase invoice
-        Given delete request order data 16
+    Scenario: delete the request order N:
+        Given delete request order data 10
         When "api/request_order_api"
         Then The result will be "excellent"
 

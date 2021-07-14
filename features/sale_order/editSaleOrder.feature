@@ -1,4 +1,4 @@
-Feature: 
+Feature:
     In order to edit a sale order in the CRUD API
 @edit
 Scenario: Edit a sale order

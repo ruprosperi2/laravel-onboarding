@@ -5,12 +5,12 @@
 			"""
 		{
             "date": "2021-07-08",
-            "created_by": "gaby",
-            "status": "compldetao",
-            "observations": "ahora si salio",
+            "created_by": "Reina",
+            "status": "compldetado",
+            "observations": "Para defenderse",
             "itemsRequests": [
                 {
-                    "product_name": "panana",
+                    "product_name": "escudos",
                     "amount": "150"
                 }
             ]
