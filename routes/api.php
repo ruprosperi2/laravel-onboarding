@@ -42,7 +42,7 @@ Route::put('sale_order/{id}', SaleOrderPutController::class);
 
 Route::delete('sale_order/{id}', SaleOrderDeleteController::class);
 
-Route::apiResource('Order', \App\Http\Controllers\PurchaseOrderController::class);
+Route::apiResource('purchaseOrder', \App\Http\Controllers\PurchaseOrderController::class);
 
 /*Facturas de Compra*/
 Route::get('invoice', InvoiceGetAllController::class);
@@ -54,3 +54,4 @@ Route::post('invoice', InvoicePostController::class);
 Route::delete('invoice/{id}', InvoiceDeleteController::class);
 
 Route::put('invoice/{id}', InvoicePutController::class);
+
