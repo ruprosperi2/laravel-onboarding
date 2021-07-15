@@ -3,9 +3,16 @@ default:
         sale_order_features:
             paths:    [ '%paths.base%/features/sale_order' ]
             contexts: [ 'SaleOrderContext' ]
+        purchase_invoice_features:
+          paths: [ '%paths.base%/features/purchase_invoice' ]
+          contexts: [ 'PurchaseInvoiceContext' ]
+
+        request_order_features:
+            paths: [ '%paths.base%/features/request_order' ]
+            contexts: [ 'RequestOrderContext' ]
 
         purchaseFeatures:
-            paths: [ '%paths.base%/features/purchase_order' ]
-            contexts: [ 'PurchaseContext' ]
+          paths: [ '%paths.base%/features/purchase_order' ]
+          contexts: [ 'PurchaseContext' ]
 
 

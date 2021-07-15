@@ -8,40 +8,41 @@ use Illuminate\Support\Facades\DB;
 class SaleOrderRepository implements SaleOrderRepositoryInterface
 {
 	protected $saleOrder;
+	protected $orderItem;
 
-	public function __construct(SaleOrder $saleOrder)
+	public function __construct(SaleOrder $saleOrder, OrderItem $orderItem)
 	{
 		$this->saleOrder = $saleOrder;
+		$this->orderItem = $orderItem;
 	}
 
 	public function create($request)
 	{
-		DB::transaction(function () use ($request){
-			$sale_order = $this->saleOrder::create($request->all());
-			
-			$order_items = collect($request->items)->map(function($item){
-				return new OrderItem($item);
-			});
-			
-			$sale_order->items()->saveMany($order_items);
-		});
+		return $this->saleOrder->create($request);
+	}
+
+	public function createItem($saleOrderId, array $item)
+	{
+		$orderItem = new OrderItem($item);
+		$sale_order = $this->saleOrder::find($saleOrderId);
+		return $sale_order->items()->save($orderItem);
 	}
 
 	public function read()
 	{
-		$items_sale_orders = $this->saleOrder::with('items')->get();
-        return response()->json($items_sale_orders);
+		return $this->saleOrder::with('items')->get();
 	}
 
-	public function update($request, $id)
+	public function update($data, $id)
 	{
-		DB::transaction(function () use ($request, $id){
-            $this->saleOrder::find($id)->update($request->except('items'));
-            
-            foreach($request->items as $items){
-                OrderItem::updateOrCreate(['id' => $items['id']], $items);
-            }
-        });
+		$this->saleOrder::find($id)->update($data);
+	}
+
+	public function updateItem(array $item)
+	{
+		$orderItem = OrderItem::updateOrCreate(['id' => $item['id']], $item);
+		
+		return $orderItem;
 	}
 
 	public function delete($id)
@@ -51,8 +52,7 @@ class SaleOrderRepository implements SaleOrderRepositoryInterface
 
 	public function readById($id)
 	{
-		$items_sale_orders = $this->saleOrder::with('items')->find($id);
-        return response()->json($items_sale_orders);
+		return $this->saleOrder::with('items')->find($id);
 	}
 }
 

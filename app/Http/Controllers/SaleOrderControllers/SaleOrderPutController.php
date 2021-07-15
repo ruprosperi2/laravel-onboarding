@@ -4,14 +4,14 @@ namespace App\Http\Controllers\SaleOrderControllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Repositories\Interfaces\SaleOrderRepositoryInterface;
+use App\Services\Interfaces\SaleOrderServiceInterface;
 
 class SaleOrderPutController extends Controller
 {
-	private $repository;
+	private $service;
 
-    public function __invoke(Request $request, SaleOrderRepositoryInterface $repository, $id){
-    	$this->repository = $repository;
-    	$this->repository->update($request, $id);
+    public function __invoke(Request $request, SaleOrderServiceInterface $service, $id){
+    	$this->service = $service;
+    	$this->service->update($request->all(), $id);
     }
 }

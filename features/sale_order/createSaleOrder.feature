@@ -1,4 +1,4 @@
-Feature: 
+Feature:
 	In order to create a sale order in the CRUD API
 @create
 Scenario: Create a sale order

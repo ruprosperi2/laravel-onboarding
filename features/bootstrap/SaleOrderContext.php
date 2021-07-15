@@ -14,7 +14,7 @@ use GuzzleHttp\RequestOptions;
  */
 class SaleOrderContext extends TestCase implements Context
 {
-    const URL = "http://localhost/";
+    const URL = "http://localhost/laravel-onboarding/";
     private $client;
     private $body;
     private $action;
