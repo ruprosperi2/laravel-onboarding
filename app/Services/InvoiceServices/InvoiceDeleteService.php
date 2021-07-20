@@ -2,8 +2,6 @@
 
 namespace App\Services\InvoiceServices;
 
-use App\Models\Invoice;
-use App\Models\InvoiceItem;
 use App\Repositories\InvoiceRepositories\InvoiceDeleteRepository;
 
 class InvoiceDeleteService
