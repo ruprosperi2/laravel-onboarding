@@ -2,7 +2,6 @@
 
 namespace Src\SaleOrder\Application;
 
-//use DateTime;
 use Src\SaleOrder\Domain\Contracts\SaleOrderRepositoryContract;
 use Src\SaleOrder\Domain\SaleOrder;
 use Src\SaleOrder\Domain\ValueObjects\SaleOrderId;

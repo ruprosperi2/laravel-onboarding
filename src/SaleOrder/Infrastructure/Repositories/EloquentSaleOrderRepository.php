@@ -1,7 +1,5 @@
 <?php
 
-//declare(strict_types=1);
-
 namespace Src\SaleOrder\Infrastructure\Repositories;
 
 use App\Models\SaleOrder as EloquentSaleOrderModel;
@@ -24,24 +22,6 @@ final class EloquentSaleOrderRepository implements SaleOrderRepositoryContract
         $this->eloquentSaleOrderModel = new EloquentSaleOrderModel;
     }
 
-    /*
-    public function find(SaleOrderId $id): ?SaleOrder
-    {
-        $saleOrder = $this->eloquentSaleOrderModel->findOrFail($id->value());
-
-        // Return Domain User model
-        return new SaleOrder(
-            new SaleOrderClient($saleOrder->client),
-            new SaleOrderPaymentTerm($saleOrder->payment_term),
-            new SaleOrderCreationDate($saleOrder->creation_date),
-            new SaleOrderCreatedBy($saleOrder->created_by),
-            new SaleOrderObservation($saleOrder->observation),
-            new SaleOrderState($saleOrder->state)
-        );
-    }
-    */
-
-
     public function save(SaleOrder $saleOrder): void
     {
         $newSaleOrder = $this->eloquentSaleOrderModel;
@@ -54,7 +34,6 @@ final class EloquentSaleOrderRepository implements SaleOrderRepositoryContract
             'state' => $saleOrder->state()->value(),
             'observation' => $saleOrder->observation()->value()
         ];
-
 
         $newSaleOrder->create($data);
     }

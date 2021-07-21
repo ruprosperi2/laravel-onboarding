@@ -8,21 +8,12 @@ final class SaleOrderId
 {
     private $value;
 
-    /**
-     * UserId constructor.
-     * @param int $id
-     * @throws InvalidArgumentException
-     */
     public function __construct(int $id)
     {
         $this->validate($id);
         $this->value = $id;
     }
 
-    /**
-     * @param int $id
-     * @throws InvalidArgumentException
-     */
     private function validate(int $id): void
     {
         $options = array(
@@ -33,7 +24,7 @@ final class SaleOrderId
 
         if (!filter_var($id, FILTER_VALIDATE_INT, $options)) {
             throw new InvalidArgumentException(
-                sprintf('<%s> does not allow the value <%s>.', static::class, $id)
+                sprintf('<%s> Does not allow the value <%s>.', static::class, $id)
             );
         }
     }

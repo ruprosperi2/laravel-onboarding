@@ -1,10 +1,7 @@
 <?php
 
-//declare(strict_types=1);
-
 namespace Src\SaleOrder\Domain;
 
-//use App\Models\SaleOrder;
 use Src\SaleOrder\Domain\ValueObjects\SaleOrderClient;
 use Src\SaleOrder\Domain\ValueObjects\SaleOrderPaymentTerm;
 use Src\SaleOrder\Domain\ValueObjects\SaleOrderCreationDate;

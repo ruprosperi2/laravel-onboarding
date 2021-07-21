@@ -2,7 +2,6 @@
 namespace Src\SaleOrder\Infrastructure;
 
 use Illuminate\Http\Request;
-//use Illuminate\Support\Facades\Hash;
 use Src\SaleOrder\Application\CreateSaleOrderUseCase;
 
 use Src\SaleOrder\Infrastructure\Repositories\EloquentSaleOrderRepository;
@@ -25,7 +24,6 @@ final class SaleOrderPostController
         $saleOrderState = $request->input('state');
         $saleOrderObservation = $request->input('observation');
 
-/*THERE IS TO CREATE THE USE CASE FOR THE SALE ORDER DOWN HERE*/
         $createSaleOrderUseCase = new CreateSaleOrderUseCase($this->repository);
         $createSaleOrderUseCase->__invoke(
             $saleOrderClient,
@@ -35,14 +33,6 @@ final class SaleOrderPostController
             $saleOrderState,
             $saleOrderObservation
         );
-
-        /*
-
-		$getUserByCriteriaUseCase = new GetUserByCriteriaUseCase($this->repository);
-        $newUser                  = $getUserByCriteriaUseCase->__invoke($userName, $userEmail);
-
-        return $newUser;
-        */
     }
 }
 
