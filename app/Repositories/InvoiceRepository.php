@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Repositories\Interfaces\BaseRepositoryInterface;
@@ -17,24 +18,28 @@ class InvoiceRepository implements BaseRepositoryInterface
         $this->invoiceItem = $invoiceItem;
     }
 
-    public function create(array $data){
+    public function create(array $data)
+    {
         return "create";
     }
 
-    public function read(){
+    public function read()
+    {
         return $this->invoice->all()->toJson();
     }
 
-    public function update(array $data, $id){
+    public function update(array $data, $id)
+    {
         return "update";
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         return "delete";
     }
 
-    public function readById($id){
-
+    public function readById($id)
+    {
         $this->invoiceRow = $this->invoice->find($id);
 
         if ($this->invoiceRow != null) {
@@ -44,6 +49,5 @@ class InvoiceRepository implements BaseRepositoryInterface
             return $this->invoiceRow->toJson();
 
         }
-        return http_response_code();
     }
 }
