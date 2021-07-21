@@ -5,12 +5,15 @@ namespace App\Repositories;
 use App\Repositories\Interfaces\BaseRepositoryInterface;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
+use Illuminate\Support\Facades\DB;
 
 class InvoiceRepository implements BaseRepositoryInterface
 {
     private $invoice;
     private $invoiceItem;
     private $invoiceGet;
+    private $invoiceNew;
+    private $result = false;
 
     public function __construct(Invoice $invoice, InvoiceItem $invoiceItem)
     {
@@ -20,17 +23,23 @@ class InvoiceRepository implements BaseRepositoryInterface
 
     public function create(array $data)
     {
-        $this->invoice->create( $data->all() );
+       DB::transaction(function () use ($data) {
 
-        $invoiceItems = [];
+           $this->invoiceNew = $this->invoice->create($data);
 
-        foreach ($data->items as $item) {
-            $invoiceItems[] = new InvoiceItem($item);
-        }
+            $invoiceItems = [];
 
-        $this->invoice->invoiceItems()->saveMany($invoiceItems);
+            foreach ($data['items'] as $item) {
+                $invoiceItems[] = new InvoiceItem($item);
+            }
 
-        return http_response_code();
+            $this->invoiceNew->invoiceItems()->saveMany($invoiceItems);
+
+            $this->result = true;
+
+        });
+
+       return $this->result;
     }
 
     public function read()
