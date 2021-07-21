@@ -2,19 +2,25 @@
 
 namespace App\Services\InvoiceServices;
 
-use App\Repositories\InvoiceRepositories\InvoiceDeleteRepository;
+use App\Repositories\Interfaces\BaseRepositoryInterface;
 
 class InvoiceDeleteService
 {
     private $repository;
 
-    public function __construct(InvoiceDeleteRepository $invoiceDeleteRepository)
+    public function __construct(BaseRepositoryInterface $invoiceDeleteRepository)
     {
         $this->repository = $invoiceDeleteRepository;
+
+        http_response_code(404);
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
-        return $this->repository->destroy($id);
+        if( $this->repository->delete($id) ){
+            http_response_code(204);
+        }
+
+        return http_response_code();
     }
 }

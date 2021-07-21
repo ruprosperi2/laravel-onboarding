@@ -17,6 +17,6 @@ class InvoiceDeleteController extends Controller
 
     public function __invoke($id)
     {
-        return $this->service->destroy($id);
+        return $this->service->delete($id);
     }
 }

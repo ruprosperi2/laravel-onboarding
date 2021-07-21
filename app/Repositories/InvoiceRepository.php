@@ -23,9 +23,9 @@ class InvoiceRepository implements BaseRepositoryInterface
 
     public function create(array $data)
     {
-       DB::transaction(function () use ($data) {
+        DB::transaction(function () use ($data) {
 
-           $this->invoiceNew = $this->invoice->create($data);
+            $this->invoiceNew = $this->invoice->create($data);
 
             $invoiceItems = [];
 
@@ -39,7 +39,7 @@ class InvoiceRepository implements BaseRepositoryInterface
 
         });
 
-       return $this->result;
+        return $this->result;
     }
 
     public function read()
@@ -54,7 +54,18 @@ class InvoiceRepository implements BaseRepositoryInterface
 
     public function delete($id)
     {
-        return "delete";
+        $this->invoiceGet = $this->invoice->find($id);
+
+        if ($this->invoiceGet) {
+
+            $this->invoiceItem->where('invoice_id', $this->invoiceGet->id)->delete();
+
+            $this->invoiceGet->delete();
+
+            $this->result = true;
+        }
+
+        return $this->result;
     }
 
     public function readById($id)
