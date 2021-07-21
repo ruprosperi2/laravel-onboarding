@@ -9,6 +9,7 @@ class InvoiceRepository implements BaseRepositoryInterface
 {
     private $invoice;
     private $invoiceItem;
+    private $invoiceRow;
 
     public function __construct(Invoice $invoice, InvoiceItem $invoiceItem)
     {
@@ -22,7 +23,6 @@ class InvoiceRepository implements BaseRepositoryInterface
 
     public function read(){
         return $this->invoice->all()->toJson();
-        //return Invoice::all()->toJson();
     }
 
     public function update(array $data, $id){
@@ -34,6 +34,16 @@ class InvoiceRepository implements BaseRepositoryInterface
     }
 
     public function readById($id){
-        return "read by id";
+
+        $this->invoiceRow = $this->invoice->find($id);
+
+        if ($this->invoiceRow != null) {
+
+            $this->invoiceRow->invoiceItems;
+
+            return $this->invoiceRow->toJson();
+
+        }
+        return http_response_code();
     }
 }

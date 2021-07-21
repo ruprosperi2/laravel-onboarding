@@ -17,6 +17,6 @@ class InvoiceGetController extends Controller
 
     public function __invoke($id)
     {
-        return $this->service->show($id);
+        return $this->service->readById($id);
     }
 }
