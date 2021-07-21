@@ -10,7 +10,7 @@ class InvoiceRepository implements BaseRepositoryInterface
 {
     private $invoice;
     private $invoiceItem;
-    private $invoiceRow;
+    private $invoiceGet;
 
     public function __construct(Invoice $invoice, InvoiceItem $invoiceItem)
     {
@@ -20,7 +20,17 @@ class InvoiceRepository implements BaseRepositoryInterface
 
     public function create(array $data)
     {
-        return "create";
+        $this->invoice->create( $data->all() );
+
+        $invoiceItems = [];
+
+        foreach ($data->items as $item) {
+            $invoiceItems[] = new InvoiceItem($item);
+        }
+
+        $this->invoice->invoiceItems()->saveMany($invoiceItems);
+
+        return http_response_code();
     }
 
     public function read()
@@ -40,13 +50,13 @@ class InvoiceRepository implements BaseRepositoryInterface
 
     public function readById($id)
     {
-        $this->invoiceRow = $this->invoice->find($id);
+        $this->invoiceGet = $this->invoice->find($id);
 
-        if ($this->invoiceRow != null) {
+        if ($this->invoiceGet != null) {
 
-            $this->invoiceRow->invoiceItems;
+            $this->invoiceGet->invoiceItems;
 
-            return $this->invoiceRow->toJson();
+            return $this->invoiceGet->toJson();
 
         }
     }

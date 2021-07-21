@@ -2,21 +2,21 @@
 
 namespace App\Services\InvoiceServices;
 
-use App\Repositories\InvoiceRepositories\InvoicePostRepository;
+use App\Repositories\Interfaces\BaseRepositoryInterface;
 
 class InvoicePostService
 {
     private $repository;
 
-    public function __construct(InvoicePostRepository $invoicePostRepository)
+    public function __construct(BaseRepositoryInterface $invoicePostRepository)
     {
         $this->repository = $invoicePostRepository;
 
     }
 
-    public function store($body)
+    public function create($body)
     {
-        return $this->repository->store($body);
+        return $this->repository->create( $body->toArray() );
     }
 
 }
