@@ -2,19 +2,19 @@
 
 namespace App\Services\InvoiceServices;
 
-use App\Repositories\InvoiceRepositories\InvoiceAllGetRepository;
+use App\Repositories\Interfaces\BaseRepositoryInterface;
 
 class InvoiceAllGetService
 {
     private $repository;
 
-    public function __construct(InvoiceAllGetRepository $invoiceAllGetRepository)
+   public function __construct(BaseRepositoryInterface $invoiceAllGetRepository)
     {
         $this->repository = $invoiceAllGetRepository;
     }
 
-    public function index()
+    public function read()
     {
-        return $this->repository->index();
+        return $this->repository->read();
     }
 }

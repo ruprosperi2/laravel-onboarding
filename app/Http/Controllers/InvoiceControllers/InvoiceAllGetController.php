@@ -17,6 +17,6 @@ class InvoiceAllGetController extends Controller
     }
     public function __invoke()
     {
-        return $this->service->index();
+        return $this->service->read();
     }
 }
