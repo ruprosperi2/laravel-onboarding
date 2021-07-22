@@ -84,14 +84,12 @@ class InvoiceRepository implements BaseRepositoryInterface
 
                 $this->invoiceGet->invoiceItems()->saveMany($invoiceItem);
 
-                $this->code = http_response_code(201);
-
-                return http_response_code();
+                $this->result= true;
             }
-            return http_response_code();
         });
-    }
 
+        return $this->result;
+    }
 
     public function delete($id)
     {
