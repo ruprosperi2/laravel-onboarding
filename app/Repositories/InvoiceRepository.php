@@ -13,6 +13,7 @@ class InvoiceRepository implements BaseRepositoryInterface
     private $invoiceItem;
     private $invoiceGet;
     private $invoiceNew;
+    private $invoiceUp;
     private $result = false;
 
     public function __construct(Invoice $invoice, InvoiceItem $invoiceItem)
@@ -49,8 +50,48 @@ class InvoiceRepository implements BaseRepositoryInterface
 
     public function update(array $data, $id)
     {
-        return "update";
+        DB::transaction(function () use ($data, $id) {
+            $this->invoiceGet = $this->invoice->find($id);
+
+            if ($this->invoiceGet) {
+                $this->invoiceGet->update([
+                    'supplier' => $data['supplier'],
+                    'pay_term' => $data['pay_term'],
+                    'date' => $data['date'],
+                    'created' => $data['created'],
+                    'status' => $data['status'],
+                    'observations' => $data['observations']
+                ]); //actualiza
+
+                $invoiceItem = [];
+
+                foreach ($data['items'] as $item) {
+                    $invoiceItemGet = $this->invoiceItem->find($item['id']);
+
+                    if (!empty($invoiceItemGet)) {
+                        //actualizar
+                        $invoiceItemGet->update([
+                            'name' => $item['name'],
+                            'amount' => $item['amount'],
+                            'price' => $item['price'],
+                            'subtotal' => $item['subtotal']
+                        ]);
+                    } else {
+                        //crear uno nuevo
+                        $invoiceItem[] = new InvoiceItem($item);
+                    }
+                }
+
+                $this->invoiceGet->invoiceItems()->saveMany($invoiceItem);
+
+                $this->code = http_response_code(201);
+
+                return http_response_code();
+            }
+            return http_response_code();
+        });
     }
+
 
     public function delete($id)
     {
