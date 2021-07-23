@@ -4,7 +4,6 @@ namespace Src\SaleOrder\Application;
 
 use Src\SaleOrder\Domain\Contracts\SaleOrderRepositoryContract;
 use Src\SaleOrder\Domain\SaleOrder;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderId;
 use Src\SaleOrder\Domain\ValueObjects\SaleOrderClient;
 use Src\SaleOrder\Domain\ValueObjects\SaleOrderPaymentTerm;
 use Src\SaleOrder\Domain\ValueObjects\SaleOrderCreationDate;

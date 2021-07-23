@@ -3,6 +3,7 @@ namespace Src\SaleOrder\Infrastructure;
 
 use Illuminate\Http\Request;
 use Src\SaleOrder\Application\CreateSaleOrderUseCase;
+use Src\SaleOrder\Application\CreateItemUseCase;
 
 use Src\SaleOrder\Infrastructure\Repositories\EloquentSaleOrderRepository;
 
@@ -17,12 +18,12 @@ final class SaleOrderPostController
 
     public function __invoke(Request $request)
     {
-        $saleOrderClient = $request->input('client');
-        $saleOrderPaymentTerm = $request->input('payment_term');
-        $saleOrderCreationDate = $request->input('creation_date');
-        $saleOrderCreatedBy = $request->input('created_by');
-        $saleOrderState = $request->input('state');
-        $saleOrderObservation = $request->input('observation');
+        $saleOrderClient = $request['client'];
+        $saleOrderPaymentTerm = $request['payment_term'];
+        $saleOrderCreationDate = $request['creation_date'];
+        $saleOrderCreatedBy = $request['created_by'];
+        $saleOrderState = $request['state'];
+        $saleOrderObservation = $request['observation'];
 
         $createSaleOrderUseCase = new CreateSaleOrderUseCase($this->repository);
         $createSaleOrderUseCase->__invoke(
@@ -33,6 +34,23 @@ final class SaleOrderPostController
             $saleOrderState,
             $saleOrderObservation
         );
+
+        foreach($request['items'] as $item)
+        {
+            $itemName = $item['name'];
+            $itemAmount = $item['amount'];
+            $itemPrice = $item['price'];
+            $itemSubTotal = $item['sub_total'];
+
+            $createItemUseCase = new CreateItemUseCase($this->repository);
+
+            $createItemUseCase->__invoke(
+            $itemName,
+            $itemAmount,
+            $itemPrice,
+            $itemSubTotal
+        );
+        }
     }
 }
 
