@@ -10,6 +10,7 @@ use Src\SaleOrder\Domain\ValueObjects\SaleOrderCreationDate;
 use Src\SaleOrder\Domain\ValueObjects\SaleOrderCreatedBy;
 use Src\SaleOrder\Domain\ValueObjects\SaleOrderState;
 use Src\SaleOrder\Domain\ValueObjects\SaleOrderObservation;
+use Src\SaleOrder\Domain\ValueObjects\SaleOrderItems;
 
 final class CreateSaleOrderUseCase
 {
@@ -26,7 +27,8 @@ final class CreateSaleOrderUseCase
         string $saleOrderCreationDate,
         string $saleOrderCreatedBy,
         string $saleOrderState,
-        string $saleOrderObservation
+        string $saleOrderObservation,
+        array $saleOrderItems
     ): void
     {
         $client = new SaleOrderClient($saleOrderClient);
@@ -35,8 +37,9 @@ final class CreateSaleOrderUseCase
         $createdBy = new SaleOrderCreatedBy($saleOrderCreatedBy);
         $state = new SaleOrderState($saleOrderState);
         $observation = new SaleOrderObservation($saleOrderObservation);
+        $items = new SaleOrderItems($saleOrderItems);
 
-        $saleOrder = SaleOrder::create($client, $paymentTerm, $creationDate, $createdBy, $state, $observation);
+        $saleOrder = SaleOrder::create($client, $paymentTerm, $creationDate, $createdBy, $state, $observation, $items);
 
         $this->repository->save($saleOrder);
     }

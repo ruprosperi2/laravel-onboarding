@@ -31,7 +31,8 @@ final class CreateItemUseCase
         $amount = new ItemAmount($itemAmount);
         $price = new ItemPrice($itemPrice);
         $subTotal = new ItemSubTotal($itemSubTotal);
-        $this->saleOrderId = new SaleOrderId(1);
+        //$this->saleOrderId = new SaleOrderId(1);
+        $this->saleOrderId = new SaleOrderId($this->repository->getLastSaleOrderId());
 
         $item = Item::create($name, $amount, $price, $subTotal, $this->saleOrderId);
 

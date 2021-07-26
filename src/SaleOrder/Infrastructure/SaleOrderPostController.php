@@ -3,8 +3,6 @@ namespace Src\SaleOrder\Infrastructure;
 
 use Illuminate\Http\Request;
 use Src\SaleOrder\Application\CreateSaleOrderUseCase;
-use Src\SaleOrder\Application\CreateItemUseCase;
-
 use Src\SaleOrder\Infrastructure\Repositories\EloquentSaleOrderRepository;
 
 final class SaleOrderPostController
@@ -24,6 +22,7 @@ final class SaleOrderPostController
         $saleOrderCreatedBy = $request['created_by'];
         $saleOrderState = $request['state'];
         $saleOrderObservation = $request['observation'];
+        $saleOrderItems = $request['items'];
 
         $createSaleOrderUseCase = new CreateSaleOrderUseCase($this->repository);
         $createSaleOrderUseCase->__invoke(
@@ -32,25 +31,9 @@ final class SaleOrderPostController
             $saleOrderCreationDate,
             $saleOrderCreatedBy,
             $saleOrderState,
-            $saleOrderObservation
+            $saleOrderObservation,
+            $saleOrderItems
         );
-
-        foreach($request['items'] as $item)
-        {
-            $itemName = $item['name'];
-            $itemAmount = $item['amount'];
-            $itemPrice = $item['price'];
-            $itemSubTotal = $item['sub_total'];
-
-            $createItemUseCase = new CreateItemUseCase($this->repository);
-
-            $createItemUseCase->__invoke(
-            $itemName,
-            $itemAmount,
-            $itemPrice,
-            $itemSubTotal
-        );
-        }
     }
 }
 

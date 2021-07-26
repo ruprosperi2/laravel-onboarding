@@ -6,8 +6,9 @@ use Src\SaleOrder\Domain\ValueObjects\SaleOrderClient;
 use Src\SaleOrder\Domain\ValueObjects\SaleOrderPaymentTerm;
 use Src\SaleOrder\Domain\ValueObjects\SaleOrderCreationDate;
 use Src\SaleOrder\Domain\ValueObjects\SaleOrderCreatedBy;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderObservation;
 use Src\SaleOrder\Domain\ValueObjects\SaleOrderState;
+use Src\SaleOrder\Domain\ValueObjects\SaleOrderObservation;
+use Src\SaleOrder\Domain\ValueObjects\SaleOrderItems;
 
 final class SaleOrder
 {
@@ -17,6 +18,7 @@ final class SaleOrder
     private $createdBy;
     private $state;
     private $observation;
+    private $items;
 
     public function __construct(
         SaleOrderClient $client,
@@ -24,7 +26,8 @@ final class SaleOrder
         SaleOrderCreationDate $creationDate,
         SaleOrderCreatedBy $createdBy,
         SaleOrderState $state,
-        SaleOrderObservation $observation
+        SaleOrderObservation $observation,
+        SaleOrderItems $items
     )
     {
         $this->client = $client;
@@ -33,6 +36,7 @@ final class SaleOrder
         $this->createdBy = $createdBy;
         $this->state = $state;
         $this->observation = $observation;
+        $this->items = $items;
     }
 
     public function client(): SaleOrderClient
@@ -65,16 +69,22 @@ final class SaleOrder
         return $this->observation;
     }
 
+    public function items(): SaleOrderItems
+    {
+        return $this->items;
+    }
+
     public static function create(
         SaleOrderClient $client,
         SaleOrderPaymentTerm $paymentTerm,
         SaleOrderCreationDate $creationDate,
         SaleOrderCreatedBy $createdBy,
         SaleOrderState $state,
-        SaleOrderObservation $observation
+        SaleOrderObservation $observation,
+        SaleOrderItems $items
     ): SaleOrder
     {
-        $saleOrder = new self($client, $paymentTerm, $creationDate, $createdBy, $state, $observation);
+        $saleOrder = new self($client, $paymentTerm, $creationDate, $createdBy, $state, $observation, $items);
 
         return $saleOrder;
     }
