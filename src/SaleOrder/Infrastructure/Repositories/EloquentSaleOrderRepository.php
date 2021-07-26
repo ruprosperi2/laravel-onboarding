@@ -97,4 +97,9 @@ final class EloquentSaleOrderRepository implements SaleOrderRepositoryContract
             EloquentItemModel::updateOrCreate(['id' => $item['id']], $item);
         }
     }
+
+    public function delete(SaleOrderId $id): void
+    {
+        $this->eloquentSaleOrderModel->findOrFail($id->value())->delete();
+    }
 }
