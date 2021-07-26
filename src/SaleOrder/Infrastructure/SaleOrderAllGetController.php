@@ -2,10 +2,10 @@
 namespace Src\SaleOrder\Infrastructure;
 
 use Illuminate\Http\Request;
-use Src\SaleOrder\Application\DeleteSaleOrderUseCase;
+use Src\SaleOrder\Application\AllGetSaleOrderUseCase;
 use Src\SaleOrder\Infrastructure\Repositories\EloquentSaleOrderRepository;
 
-final class SaleOrderDeleteController
+final class SaleOrderAllGetController
 {
     private $repository;
 
@@ -16,10 +16,11 @@ final class SaleOrderDeleteController
 
     public function __invoke(Request $request)
     {
-        $saleOrderId = (int)$request->id;
+        $allGetSaleOrderUseCase = new AllGetSaleOrderUseCase($this->repository);
 
-        $deleteSaleOrderUseCase = new DeleteSaleOrderUseCase($this->repository);
-        $deleteSaleOrderUseCase->__invoke($saleOrderId);
+        $saleOrder = $allGetSaleOrderUseCase->__invoke();
+        
+        return $saleOrder;
     }
 }
 

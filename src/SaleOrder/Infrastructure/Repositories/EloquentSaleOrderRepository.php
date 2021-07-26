@@ -64,6 +64,11 @@ final class EloquentSaleOrderRepository implements SaleOrderRepositoryContract
         );
     }
 
+    public function findAll()
+    {
+        return $this->eloquentSaleOrderModel->with('items')->get();
+    }
+
     public function update(SaleOrderId $id, SaleOrder $saleOrder): void
     {
         $saleOrderToUpdate = $this->eloquentSaleOrderModel;

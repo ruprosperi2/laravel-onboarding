@@ -3,14 +3,22 @@
 namespace App\Http\Controllers\SaleOrderControllers;
 
 use App\Http\Controllers\Controller;
-use App\Services\Interfaces\SaleOrderServiceInterface;
+use App\Http\Resources\SaleOrderResource;
+use Illuminate\Http\Request;
 
 class SaleOrderGetController extends Controller
 {
-	private $service;
+	private $saleOrderGetController;
 
-    public function __invoke( SaleOrderServiceInterface $service, $id){
-    	$this->service = $service;
-    	return $this->service->readById($id);
-    }
+	public function __construct(\Src\SaleOrder\Infrastructure\SaleOrderGetController $saleOrderGetController)
+	{
+		$this->saleOrderGetController = $saleOrderGetController;
+	}
+
+	public function __invoke(Request $request)
+	{
+		$saleOrder = new SaleOrderResource($this->saleOrderGetController->__invoke($request));
+
+		return response($saleOrder, 200);
+	}
 }
