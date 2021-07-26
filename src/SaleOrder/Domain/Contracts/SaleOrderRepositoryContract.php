@@ -11,7 +11,7 @@ interface SaleOrderRepositoryContract
 
     public function find(SaleOrderId $id): ?SaleOrder;
 
-    public function findAll();
+    public function findAll(): object;
 
     public function update(SaleOrderId $saleOrderId, SaleOrder $saleOrder): void;
 

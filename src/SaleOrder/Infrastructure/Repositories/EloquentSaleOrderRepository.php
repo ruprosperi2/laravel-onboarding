@@ -3,6 +3,7 @@
 namespace Src\SaleOrder\Infrastructure\Repositories;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use App\Models\SaleOrder as EloquentSaleOrderModel;
 use App\Models\OrderItem as EloquentItemModel;
 use Src\SaleOrder\Domain\Contracts\SaleOrderRepositoryContract;
@@ -28,25 +29,27 @@ final class EloquentSaleOrderRepository implements SaleOrderRepositoryContract
 
     public function save(SaleOrder $saleOrder): void
     {
-        $data = [
+        DB::transaction(function () use ($saleOrder){
+           $data = [
             'client' => $saleOrder->client()->value(),
             'payment_term' => $saleOrder->paymentTerm()->value(),
             'creation_date' => $saleOrder->creationDate()->value(),
             'created_by' => $saleOrder->createdBy()->value(),
             'state' => $saleOrder->state()->value(),
             'observation' => $saleOrder->observation()->value(),
-        ];
+            ];
 
-        $newSaleOrder = $this->eloquentSaleOrderModel->create($data);
+            $newSaleOrder = $this->eloquentSaleOrderModel->create($data);
 
-        $saleOrderItems = [];
+            $saleOrderItems = [];
         
-        foreach($saleOrder->items()->value() as $item)
-        {
-            $saleOrderItems[] = new EloquentItemModel($item);
-        }
+            foreach($saleOrder->items()->value() as $item)
+            {
+                $saleOrderItems[] = new EloquentItemModel($item);
+            }
 
-        $newSaleOrder->items()->saveMany($saleOrderItems);
+            $newSaleOrder->items()->saveMany($saleOrderItems); 
+        });
     }
 
     public function find(SaleOrderId $id): ?SaleOrder
@@ -64,43 +67,64 @@ final class EloquentSaleOrderRepository implements SaleOrderRepositoryContract
         );
     }
 
-    public function findAll()
+    public function findAll(): object
     {
         return $this->eloquentSaleOrderModel->with('items')->get();
     }
 
     public function update(SaleOrderId $id, SaleOrder $saleOrder): void
     {
-        $saleOrderToUpdate = $this->eloquentSaleOrderModel;
-
-        $data = [
+        DB::transaction(function () use ($id, $saleOrder){
+           $data = [
             'client' => $saleOrder->client()->value(),
             'payment_term' => $saleOrder->paymentTerm()->value(),
             'creation_date' => $saleOrder->creationDate()->value(),
             'created_by' => $saleOrder->createdBy()->value(),
             'state' => $saleOrder->state()->value(),
-            'observation' => $saleOrder->observation()->value()
-        ];
+            'observation' => $saleOrder->observation()->value(),
+            ];
 
-        $saleOrderToUpdate->findOrFail($id->value())->update($data);
+            $newSaleOrder = $this->eloquentSaleOrderModel->create($data);
 
-        $findingItems = EloquentSaleOrderModel::find($id->value());
-
-        $idItem = $findingItems->items->pluck('id')->all();
-
-        $idCompare = Arr::pluck($saleOrder->items()->value(), 'id');
-
-        $notIn = array_values(array_diff($idItem, $idCompare));
-
-        if (!empty($notIn))
+            $saleOrderItems = [];
+            
+            foreach($saleOrder->items()->value() as $item)
             {
-                $findingItems->items()->whereIn('id', $notIn)->delete();
+                $saleOrderItems[] = new EloquentItemModel($item);
             }
-        
-        foreach($saleOrder->items()->value() as $item)
-        {
-            EloquentItemModel::updateOrCreate(['id' => $item['id']], $item);
-        }
+
+            $newSaleOrder->items()->saveMany($saleOrderItems);
+            $saleOrderToUpdate = $this->eloquentSaleOrderModel;
+
+            $data = [
+                'client' => $saleOrder->client()->value(),
+                'payment_term' => $saleOrder->paymentTerm()->value(),
+                'creation_date' => $saleOrder->creationDate()->value(),
+                'created_by' => $saleOrder->createdBy()->value(),
+                'state' => $saleOrder->state()->value(),
+                'observation' => $saleOrder->observation()->value()
+            ];
+
+            $saleOrderToUpdate->findOrFail($id->value())->update($data);
+
+            $findingItems = EloquentSaleOrderModel::find($id->value());
+
+            $idItem = $findingItems->items->pluck('id')->all();
+
+            $idCompare = Arr::pluck($saleOrder->items()->value(), 'id');
+
+            $notIn = array_values(array_diff($idItem, $idCompare));
+
+            if (!empty($notIn))
+                {
+                    $findingItems->items()->whereIn('id', $notIn)->delete();
+                }
+            
+            foreach($saleOrder->items()->value() as $item)
+            {
+                EloquentItemModel::updateOrCreate(['id' => $item['id']], $item);
+            } 
+        });
     }
 
     public function delete(SaleOrderId $id): void
