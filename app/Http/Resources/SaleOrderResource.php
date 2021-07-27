@@ -21,7 +21,8 @@ class SaleOrderResource extends JsonResource
                 'creation_date' => $this->creationDate()->value(),
                 'created_by' => $this->createdBy()->value(),
                 'state' => $this->state()->value(),
-                'observation' => $this->observation()->value()
+                'observation' => $this->observation()->value(),
+                'items' => $this->items()->value()
             ]
         ];
     }
