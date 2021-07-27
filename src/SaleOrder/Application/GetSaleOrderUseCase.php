@@ -2,7 +2,7 @@
 namespace Src\SaleOrder\Application;
 
 use Src\SaleOrder\Domain\Contracts\SaleOrderRepositoryContract;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderId;
+use Shared\Domain\ValueObject\Id;
 use Src\SaleOrder\Domain\SaleOrder;
 
 final class GetSaleOrderUseCase
@@ -16,7 +16,7 @@ final class GetSaleOrderUseCase
 
 	public function __invoke(int $saleOrderId): ?SaleOrder
 	{
-		$id = new SaleOrderId($saleOrderId);
+		$id = new Id($saleOrderId);
 
 		$saleOrder = $this->repository->find($id);
 

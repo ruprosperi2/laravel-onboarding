@@ -4,13 +4,13 @@ namespace Src\SaleOrder\Application;
 
 use Src\SaleOrder\Domain\Contracts\SaleOrderRepositoryContract;
 use Src\SaleOrder\Domain\SaleOrder;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderClient;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderPaymentTerm;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderCreationDate;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderCreatedBy;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderState;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderObservation;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderItems;
+use Shared\Domain\ValueObject\Client;
+use Shared\Domain\ValueObject\PaymentTerm;
+use Shared\Domain\ValueObject\CreationDate;
+use Shared\Domain\ValueObject\CreatedBy;
+use Shared\Domain\ValueObject\State;
+use Shared\Domain\ValueObject\Observation;
+use Shared\Domain\ValueObject\Items;
 
 final class CreateSaleOrderUseCase
 {
@@ -31,13 +31,13 @@ final class CreateSaleOrderUseCase
         array $saleOrderItems
     ): void
     {
-        $client = new SaleOrderClient($saleOrderClient);
-        $paymentTerm = new SaleOrderPaymentTerm($saleOrderPaymentTerm);
-        $creationDate = new SaleOrderCreationDate($saleOrderCreationDate);
-        $createdBy = new SaleOrderCreatedBy($saleOrderCreatedBy);
-        $state = new SaleOrderState($saleOrderState);
-        $observation = new SaleOrderObservation($saleOrderObservation);
-        $items = new SaleOrderItems($saleOrderItems);
+        $client = new Client($saleOrderClient);
+        $paymentTerm = new PaymentTerm($saleOrderPaymentTerm);
+        $creationDate = new CreationDate($saleOrderCreationDate);
+        $createdBy = new CreatedBy($saleOrderCreatedBy);
+        $state = new State($saleOrderState);
+        $observation = new Observation($saleOrderObservation);
+        $items = new Items($saleOrderItems);
 
         $saleOrder = SaleOrder::create($client, $paymentTerm, $creationDate, $createdBy, $state, $observation, $items);
 

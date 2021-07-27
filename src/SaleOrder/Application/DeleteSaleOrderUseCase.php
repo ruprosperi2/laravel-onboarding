@@ -2,7 +2,7 @@
 namespace Src\SaleOrder\Application;
 
 use Src\SaleOrder\Domain\Contracts\SaleOrderRepositoryContract;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderId;
+use Shared\Domain\ValueObject\Id;
 
 final class DeleteSaleOrderUseCase
 {
@@ -15,7 +15,7 @@ final class DeleteSaleOrderUseCase
 
 	public function __invoke(int $saleOrderId): void
 	{
-		$id = new SaleOrderId($saleOrderId);
+		$id = new Id($saleOrderId);
 
 		$saleOrder = $this->repository->delete($id);
 	}
