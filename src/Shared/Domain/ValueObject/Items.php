@@ -1,8 +1,8 @@
 <?php
 
-namespace Src\SaleOrder\Domain\ValueObjects;
+namespace Shared\Domain\ValueObject;
 
-final class SaleOrderItems
+final class Items
 {
     private $value;
 

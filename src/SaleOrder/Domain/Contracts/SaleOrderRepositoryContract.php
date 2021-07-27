@@ -3,17 +3,17 @@
 namespace Src\SaleOrder\Domain\Contracts;
 
 use Src\SaleOrder\Domain\SaleOrder;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderId;
+use Shared\Domain\ValueObject\Id;
 
 interface SaleOrderRepositoryContract
 {
     public function save(SaleOrder $saleOrder): void;
 
-    public function find(SaleOrderId $id): ?SaleOrder;
+    public function find(Id $id): ?SaleOrder;
 
     public function findAll(): object;
 
-    public function update(SaleOrderId $saleOrderId, SaleOrder $saleOrder): void;
+    public function update(Id $Id, SaleOrder $saleOrder): void;
 
-    public function delete(SaleOrderId $id): void;
+    public function delete(Id $id): void;
 }

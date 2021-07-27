@@ -2,13 +2,13 @@
 
 namespace Src\SaleOrder\Domain;
 
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderClient;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderPaymentTerm;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderCreationDate;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderCreatedBy;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderState;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderObservation;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderItems;
+use Shared\Domain\ValueObject\Client;
+use Shared\Domain\ValueObject\PaymentTerm;
+use Shared\Domain\ValueObject\CreationDate;
+use Shared\Domain\ValueObject\CreatedBy;
+use Shared\Domain\ValueObject\State;
+use Shared\Domain\ValueObject\Observation;
+use Shared\Domain\ValueObject\Items;
 
 final class SaleOrder
 {
@@ -21,13 +21,13 @@ final class SaleOrder
     private $items;
 
     public function __construct(
-        SaleOrderClient $client,
-        SaleOrderPaymentTerm $paymentTerm,
-        SaleOrderCreationDate $creationDate,
-        SaleOrderCreatedBy $createdBy,
-        SaleOrderState $state,
-        SaleOrderObservation $observation,
-        SaleOrderItems $items
+        Client $client,
+        PaymentTerm $paymentTerm,
+        CreationDate $creationDate,
+        CreatedBy $createdBy,
+        State $state,
+        Observation $observation,
+        Items $items
     )
     {
         $this->client = $client;
@@ -39,49 +39,49 @@ final class SaleOrder
         $this->items = $items;
     }
 
-    public function client(): SaleOrderClient
+    public function client(): Client
     {
         return $this->client;
     }
 
-    public function paymentTerm(): SaleOrderPaymentTerm
+    public function paymentTerm(): PaymentTerm
     {
         return $this->paymentTerm;
     }
 
-    public function creationDate(): SaleOrderCreationDate
+    public function creationDate(): CreationDate
     {
         return $this->creationDate;
     }
 
-    public function createdBy(): SaleOrderCreatedBy
+    public function createdBy(): CreatedBy
     {
         return $this->createdBy;
     }
 
-    public function state(): SaleOrderState
+    public function state(): State
     {
         return $this->state;
     }
 
-    public function observation(): SaleOrderObservation
+    public function observation(): Observation
     {
         return $this->observation;
     }
 
-    public function items(): SaleOrderItems
+    public function items(): Items
     {
         return $this->items;
     }
 
     public static function create(
-        SaleOrderClient $client,
-        SaleOrderPaymentTerm $paymentTerm,
-        SaleOrderCreationDate $creationDate,
-        SaleOrderCreatedBy $createdBy,
-        SaleOrderState $state,
-        SaleOrderObservation $observation,
-        SaleOrderItems $items
+        Client $client,
+        PaymentTerm $paymentTerm,
+        CreationDate $creationDate,
+        CreatedBy $createdBy,
+        State $state,
+        Observation $observation,
+        Items $items
     ): SaleOrder
     {
         $saleOrder = new self($client, $paymentTerm, $creationDate, $createdBy, $state, $observation, $items);

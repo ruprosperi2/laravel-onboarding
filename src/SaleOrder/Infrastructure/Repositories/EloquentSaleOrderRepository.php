@@ -8,14 +8,14 @@ use App\Models\SaleOrder as EloquentSaleOrderModel;
 use App\Models\OrderItem as EloquentItemModel;
 use Src\SaleOrder\Domain\Contracts\SaleOrderRepositoryContract;
 use Src\SaleOrder\Domain\SaleOrder;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderId;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderClient;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderPaymentTerm;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderCreationDate;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderCreatedBy;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderState;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderObservation;
-use Src\SaleOrder\Domain\ValueObjects\SaleOrderItems;
+use Shared\Domain\ValueObject\Id;
+use Shared\Domain\ValueObject\Client;
+use Shared\Domain\ValueObject\PaymentTerm;
+use Shared\Domain\ValueObject\CreationDate;
+use Shared\Domain\ValueObject\CreatedBy;
+use Shared\Domain\ValueObject\State;
+use Shared\Domain\ValueObject\Observation;
+use Shared\Domain\ValueObject\Items;
 
 final class EloquentSaleOrderRepository implements SaleOrderRepositoryContract
 {
@@ -41,29 +41,26 @@ final class EloquentSaleOrderRepository implements SaleOrderRepositoryContract
 
             $newSaleOrder = $this->eloquentSaleOrderModel->create($data);
 
-            $saleOrderItems = [];
-        
-            foreach($saleOrder->items()->value() as $item)
-            {
-                $saleOrderItems[] = new EloquentItemModel($item);
-            }
+            $saleOrderItems = collect($saleOrder->items()->value())->map(function($item){
+				return new EloquentItemModel($item);
+			});
 
             $newSaleOrder->items()->saveMany($saleOrderItems); 
         });
     }
 
-    public function find(SaleOrderId $id): ?SaleOrder
+    public function find(Id $id): ?SaleOrder
     {
         $saleOrder = $this->eloquentSaleOrderModel->findOrFail($id->value());
 
         return new SaleOrder(
-            new SaleOrderClient($saleOrder->client),
-            new SaleOrderPaymentTerm($saleOrder->payment_term),
-            new SaleOrderCreationDate($saleOrder->creation_date),
-            new SaleOrderCreatedBy($saleOrder->created_by),
-            new SaleOrderState($saleOrder->state),
-            new SaleOrderObservation($saleOrder->observation),
-            new SaleOrderItems(json_decode(json_encode($saleOrder->items), true))
+            new Client($saleOrder->client),
+            new PaymentTerm($saleOrder->payment_term),
+            new CreationDate($saleOrder->creation_date),
+            new CreatedBy($saleOrder->created_by),
+            new State($saleOrder->state),
+            new Observation($saleOrder->observation),
+            new Items(json_decode(json_encode($saleOrder->items), true))
         );
     }
 
@@ -72,28 +69,10 @@ final class EloquentSaleOrderRepository implements SaleOrderRepositoryContract
         return $this->eloquentSaleOrderModel->with('items')->get();
     }
 
-    public function update(SaleOrderId $id, SaleOrder $saleOrder): void
+    public function update(Id $id, SaleOrder $saleOrder): void
     {
         DB::transaction(function () use ($id, $saleOrder){
-           $data = [
-            'client' => $saleOrder->client()->value(),
-            'payment_term' => $saleOrder->paymentTerm()->value(),
-            'creation_date' => $saleOrder->creationDate()->value(),
-            'created_by' => $saleOrder->createdBy()->value(),
-            'state' => $saleOrder->state()->value(),
-            'observation' => $saleOrder->observation()->value(),
-            ];
-
-            $newSaleOrder = $this->eloquentSaleOrderModel->create($data);
-
-            $saleOrderItems = [];
-            
-            foreach($saleOrder->items()->value() as $item)
-            {
-                $saleOrderItems[] = new EloquentItemModel($item);
-            }
-
-            $newSaleOrder->items()->saveMany($saleOrderItems);
+           
             $saleOrderToUpdate = $this->eloquentSaleOrderModel;
 
             $data = [
@@ -127,7 +106,7 @@ final class EloquentSaleOrderRepository implements SaleOrderRepositoryContract
         });
     }
 
-    public function delete(SaleOrderId $id): void
+    public function delete(Id $id): void
     {
         $this->eloquentSaleOrderModel->findOrFail($id->value())->delete();
     }
