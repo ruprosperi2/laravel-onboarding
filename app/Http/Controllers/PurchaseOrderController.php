@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\OrderItem;
 use App\Models\PurchaseItem;
 use App\Models\PurchaseOrder;
 use Illuminate\Http\Request;

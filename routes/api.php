@@ -1,8 +1,8 @@
 <?php
 
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\SaleOrderControllers\SaleOrderPostController;
 use App\Http\Controllers\SaleOrderControllers\SaleOrderPutController;
 use App\Http\Controllers\SaleOrderControllers\SaleOrderDeleteController;
@@ -14,6 +14,12 @@ use App\Http\Controllers\InvoiceControllers\InvoiceGetController;
 use App\Http\Controllers\InvoiceControllers\InvoicePostController;
 use App\Http\Controllers\InvoiceControllers\InvoiceDeleteController;
 use App\Http\Controllers\InvoiceControllers\InvoicePutController;
+
+use App\Http\Controllers\PurchaseOrderController\PurchaseOrderCreateController;
+use App\Http\Controllers\PurchaseOrderController\PurchaseOrderReadController;
+use App\Http\Controllers\PurchaseOrderController\PurchaseOrderReadOneController;
+use App\Http\Controllers\PurchaseOrderController\PurchaseOrderUpdateController;
+use App\Http\Controllers\PurchaseOrderController\PurchaseOrderDeleteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +48,7 @@ Route::put('sale_order/{id}', SaleOrderPutController::class);
 
 Route::delete('sale_order/{id}', SaleOrderDeleteController::class);
 
-Route::apiResource('purchaseOrder', \App\Http\Controllers\PurchaseOrderController::class);
+//Route::apiResource('purchaseOrder', \App\Http\Controllers\PurchaseOrderController::class);
 
 /*Facturas de Compra*/
 Route::get('invoice', InvoiceGetAllController::class);
@@ -54,4 +60,11 @@ Route::post('invoice', InvoicePostController::class);
 Route::delete('invoice/{id}', InvoiceDeleteController::class);
 
 Route::put('invoice/{id}', InvoicePutController::class);
+
+//Purchase Order
+Route::get('purchaseOrder', PurchaseOrderReadController::class);
+Route::get('purchaseOrder/{id}', PurchaseOrderReadOneController::class);
+Route::post('purchaseOrder', PurchaseOrderCreateController::class);
+Route::put('purchaseOrder', PurchaseOrderUpdateController::class);
+Route::delete('purchaseOrder/{id}', PurchaseOrderDeleteController::class);
 
