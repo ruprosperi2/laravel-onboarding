@@ -48,10 +48,10 @@ class PurchaseInvoiceMysqlRepository implements PurchaseInvoiceRepository
             $invoiceItem = [];
 
             foreach ($body->items()->value() as $item) {
-                $invoiceItem['name'] = $item['name'];
-                $invoiceItem['amount'] = $item['amount'];
-                $invoiceItem['price'] = $item['price'];
-                $invoiceItem['subtotal'] = $item['subtotal'];
+                $invoiceItem['name'] = $item['name']->value();
+                $invoiceItem['amount'] = $item['amount']->value();
+                $invoiceItem['price'] = $item['price']->value();
+                $invoiceItem['subtotal'] = $invoiceItem['amount'] * $invoiceItem['price'];
                 $invoiceItem['invoice_id'] = $id;
             }
 

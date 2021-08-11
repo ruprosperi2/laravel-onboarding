@@ -2,13 +2,31 @@
 
 namespace Src\PurchaseInvoice\Domain\ValueObjects;
 
+use Src\PurchaseInvoice\Domain\ValueObjects\Name;
+use Src\PurchaseInvoice\Domain\ValueObjects\Amount;
+use Src\PurchaseInvoice\Domain\ValueObjects\Price;
+
 class Items
 {
     private $value;
 
     public function __construct(array $items)
     {
-        $this->value = $items;
+        $this->value = $this->validate($items);
+
+    }
+
+    public function validate(array $items)
+    {
+        $rows = [];
+
+        for ($i = 0; $i < count($items); $i++) {
+            $rows[$i]['name'] = new Name($items[$i]['name']);
+            $rows[$i]['amount'] = new Amount($items[$i]['amount']);
+            $rows[$i]['price'] = new Price($items[$i]['price']);
+        }
+
+        return $rows;
     }
 
     public function value(): array
