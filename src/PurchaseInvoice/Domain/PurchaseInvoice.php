@@ -7,6 +7,7 @@ use Src\PurchaseInvoice\Domain\ValueObjects\Id;
 use Src\PurchaseInvoice\Domain\ValueObjects\Supplier;
 use Src\PurchaseInvoice\Domain\ValueObjects\Payterm;
 use Src\PurchaseInvoice\Domain\ValueObjects\DateCreation;
+use Src\PurchaseInvoice\Domain\ValueObjects\Created;
 use Src\PurchaseInvoice\Domain\ValueObjects\Status;
 use Src\PurchaseInvoice\Domain\ValueObjects\Observations;
 use Src\PurchaseInvoice\Domain\ValueObjects\Items;

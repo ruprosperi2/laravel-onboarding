@@ -20,6 +20,7 @@ use App\Http\Controllers\InvoiceControllers\InvoicePutController;
 
 use Src\PurchaseInvoice\Infrastructure\Controller\PurchaseInvoiceAllGetController;
 use Src\PurchaseInvoice\Infrastructure\Controller\PurchaseInvoiceGetController;
+use Src\PurchaseInvoice\Infrastructure\Controller\PurchaseInvoicePostController;
 
 
 use App\Http\Controllers\PurchaseOrderController\PurchaseOrderCreateController;
@@ -74,6 +75,7 @@ Route::put('invoice/{id}', InvoicePutController::class);
 
 Route::get('purchaseInvoice', PurchaseInvoiceAllGetController::class);
 Route::get('purchaseInvoice/{id}', PurchaseInvoiceGetController::class);
+Route::post('purchaseInvoice', PurchaseInvoicePostController::class);
 
 
 

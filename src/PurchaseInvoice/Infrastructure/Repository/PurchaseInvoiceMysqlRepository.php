@@ -20,22 +20,29 @@ class PurchaseInvoiceMysqlRepository implements PurchaseInvoiceRepository
 
         $row = DB::table('invoices')
             ->join('invoice_items', 'invoices.id', '=', 'invoice_items.invoice_id')
-            ->select('invoices.*', 'invoice_items.*')
+            ->select('invoices.supplier', 'invoice_items.name')
             ->where('invoices.id', '=', $id->value())
-            ->groupBy()
             ->get();
 
         dd($row);
 
-        return new PurchaseInvoice(
-            new Supplier($saleOrder->client),
-            new Payterm($saleOrder->payment_term),
-            new DateCreation($saleOrder->creation_date),
-            new Created($saleOrder->created_by),
-            new Status($saleOrder->state),
-            new Observations($saleOrder->observation),
-            new Items(json_decode(json_encode($saleOrder->items), true))
-        );
+    }
 
+    public function save(PurchaseInvoice $body): void
+    {
+        DB::transaction(function () use ($body) {
+            $id = DB::table('invoices')->insertGetId(
+                [
+                    'supplier' => $body->supplier()->value(),
+                    'pay_term' => $body->pay_term()->value(),
+                    'date' => $body->date()->value(),
+                    'created' => $body->created()->value(),
+                    'status' => $body->status()->value(),
+                    'observations' => $body->observations()->value(),
+                    'created_at' => ,
+                    'updated_at' =>
+                ]
+            );
+        });
     }
 }
