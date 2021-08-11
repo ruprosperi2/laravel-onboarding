@@ -17,18 +17,25 @@ class PurchaseInvoiceMysqlRepository implements PurchaseInvoiceRepository
 
     public function find(Id $id): PurchaseInvoice
     {
-        $row = DB::table('invoices')->where('id', '=', $id->value())->get();
 
-        dd(count($row));
+        $row = DB::table('invoices')
+            ->join('invoice_items', 'invoices.id', '=', 'invoice_items.invoice_id')
+            ->select('invoices.*', 'invoice_items.*')
+            ->where('invoices.id', '=', $id->value())
+            ->groupBy()
+            ->get();
 
-       /* return new SaleOrder(
-            new Client($saleOrder->client),
-            new PaymentTerm($saleOrder->payment_term),
-            new CreationDate($saleOrder->creation_date),
-            new CreatedBy($saleOrder->created_by),
-            new State($saleOrder->state),
-            new Observation($saleOrder->observation),
+        dd($row);
+
+        return new PurchaseInvoice(
+            new Supplier($saleOrder->client),
+            new Payterm($saleOrder->payment_term),
+            new DateCreation($saleOrder->creation_date),
+            new Created($saleOrder->created_by),
+            new Status($saleOrder->state),
+            new Observations($saleOrder->observation),
             new Items(json_decode(json_encode($saleOrder->items), true))
-        );*/
+        );
+
     }
 }

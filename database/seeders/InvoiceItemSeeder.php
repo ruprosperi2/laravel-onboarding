@@ -23,5 +23,16 @@ class InvoiceItemSeeder extends Seeder
         $invoiceItem->invoice_id = 1;
 
         $invoiceItem->save();
+
+
+        $invoiceItem2 = new InvoiceItem();
+
+        $invoiceItem2->name = 'Queso 5 kg';
+        $invoiceItem2->amount = 1;
+        $invoiceItem2->price = 3000.45;
+        $invoiceItem2->subtotal = $invoiceItem2->amount * $invoiceItem2->price;
+        $invoiceItem2->invoice_id = 1;
+
+        $invoiceItem2->save();
     }
 }
