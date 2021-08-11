@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\InvoiceControllers;
 
+
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Services\InvoiceServices\InvoiceAllGetService;

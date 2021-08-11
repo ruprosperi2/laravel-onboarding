@@ -9,11 +9,15 @@ use App\Http\Controllers\SaleOrderControllers\SaleOrderDeleteController;
 use App\Http\Controllers\SaleOrderControllers\SaleOrderGetController;
 use App\Http\Controllers\SaleOrderControllers\SaleOrderAllGetController;
 
+/*
 use App\Http\Controllers\InvoiceControllers\InvoiceAllGetController;
 use App\Http\Controllers\InvoiceControllers\InvoiceGetController;
 use App\Http\Controllers\InvoiceControllers\InvoicePostController;
 use App\Http\Controllers\InvoiceControllers\InvoiceDeleteController;
 use App\Http\Controllers\InvoiceControllers\InvoicePutController;
+*/
+
+use Src\PurchaseInvoice\Infrastructure\Controller\PurchaseInvoiceAllGetController;
 
 use App\Http\Controllers\PurchaseOrderController\PurchaseOrderCreateController;
 use App\Http\Controllers\PurchaseOrderController\PurchaseOrderReadController;
@@ -50,7 +54,10 @@ Route::delete('sale_order/{id}', SaleOrderDeleteController::class);
 
 //Route::apiResource('purchaseOrder', \App\Http\Controllers\PurchaseOrderController::class);
 
+
 /*Facturas de Compra*/
+
+/*
 Route::get('invoice', InvoiceAllGetController::class);
 
 Route::get('invoice/{id}', InvoiceGetController::class);
@@ -60,6 +67,10 @@ Route::post('invoice', InvoicePostController::class);
 Route::delete('invoice/{id}', InvoiceDeleteController::class);
 
 Route::put('invoice/{id}', InvoicePutController::class);
+*/
+
+Route::get('purchaseInvoice', PurchaseInvoiceAllGetController::class);
+
 
 //Purchase Order
 Route::get('purchaseOrder', PurchaseOrderReadController::class);
