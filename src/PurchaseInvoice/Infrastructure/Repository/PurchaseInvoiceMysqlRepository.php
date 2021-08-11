@@ -31,18 +31,42 @@ class PurchaseInvoiceMysqlRepository implements PurchaseInvoiceRepository
     public function save(PurchaseInvoice $body): void
     {
         DB::transaction(function () use ($body) {
+
             $id = DB::table('invoices')->insertGetId(
                 [
                     'supplier' => $body->supplier()->value(),
-                    'pay_term' => $body->pay_term()->value(),
+                    'pay_term' => $body->payTerm()->value(),
                     'date' => $body->date()->value(),
                     'created' => $body->created()->value(),
                     'status' => $body->status()->value(),
                     'observations' => $body->observations()->value(),
-                    'created_at' => ,
-                    'updated_at' =>
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s')
                 ]
             );
+
+            $invoiceItem = [];
+
+            foreach ($body->items()->value() as $item) {
+                $invoiceItem['name'] = $item['name'];
+                $invoiceItem['amount'] = $item['amount'];
+                $invoiceItem['price'] = $item['price'];
+                $invoiceItem['subtotal'] = $item['subtotal'];
+                $invoiceItem['invoice_id'] = $id;
+            }
+
+            DB::table('invoice_items')->insert([
+                [
+                    'name' => $invoiceItem['name'],
+                    'amount' => $invoiceItem['amount'],
+                    'price' => $invoiceItem['price'],
+                    'subtotal' => $invoiceItem['subtotal'],
+                    'invoice_id' => $invoiceItem['invoice_id'],
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s')
+                ]
+            ]);
+
         });
     }
 }

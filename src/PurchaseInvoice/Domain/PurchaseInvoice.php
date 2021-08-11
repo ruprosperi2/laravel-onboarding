@@ -59,6 +59,11 @@ class PurchaseInvoice
         return $this->date;
     }
 
+    public function created(): Created
+    {
+        return $this->created;
+    }
+
     public function status(): Status
     {
         return $this->status;
