@@ -69,4 +69,11 @@ class PurchaseInvoiceMysqlRepository implements PurchaseInvoiceRepository
 
         });
     }
+
+    public function delete(Id $id): void
+    {
+        DB::transaction(function () use ($id) {
+            DB::table('invoices')->where('id', '=', $id->value())->delete();
+        });
+    }
 }
