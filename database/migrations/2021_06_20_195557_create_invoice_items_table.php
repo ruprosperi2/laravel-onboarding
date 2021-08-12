@@ -19,8 +19,7 @@ class CreateInvoiceItemsTable extends Migration
             $table->smallInteger('amount');
             $table->decimal('price');
             $table->decimal('subtotal');
-            $table->unsignedBigInteger('invoice_id');
-            $table->foreign('invoice_id')->references('id')->on('invoices');
+            $table->foreignId('invoice_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -34,4 +33,5 @@ class CreateInvoiceItemsTable extends Migration
     {
         Schema::dropIfExists('invoice_items');
     }
+
 }
