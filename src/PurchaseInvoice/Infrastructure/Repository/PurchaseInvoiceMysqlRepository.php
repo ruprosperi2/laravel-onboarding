@@ -44,28 +44,30 @@ class PurchaseInvoiceMysqlRepository implements PurchaseInvoiceRepository
                     'updated_at' => date('Y-m-d H:i:s')
                 ]
             );
-
             $invoiceItem = [];
 
-            foreach ($body->items()->value() as $item) {
-                $invoiceItem['name'] = $item['name']->value();
-                $invoiceItem['amount'] = $item['amount']->value();
-                $invoiceItem['price'] = $item['price']->value();
-                $invoiceItem['subtotal'] = $invoiceItem['amount'] * $invoiceItem['price'];
-                $invoiceItem['invoice_id'] = $id;
-            }
+            $i = 0;
 
-            DB::table('invoice_items')->insert([
-                [
-                    'name' => $invoiceItem['name'],
-                    'amount' => $invoiceItem['amount'],
-                    'price' => $invoiceItem['price'],
-                    'subtotal' => $invoiceItem['subtotal'],
-                    'invoice_id' => $invoiceItem['invoice_id'],
-                    'created_at' => date('Y-m-d H:i:s'),
-                    'updated_at' => date('Y-m-d H:i:s')
-                ]
-            ]);
+            foreach ($body->items()->value() as $item) {
+                $invoiceItem[$i]['name'] = $item['name']->value();
+                $invoiceItem[$i]['amount'] = $item['amount']->value();
+                $invoiceItem[$i]['price'] = $item['price']->value();
+                $invoiceItem[$i]['subtotal'] = $invoiceItem[$i]['amount'] * $invoiceItem[$i]['price'];
+                $invoiceItem[$i]['invoice_id'] = $id;
+
+                DB::table('invoice_items')->insert([
+                    [
+                        'name' => $invoiceItem[$i]['name'],
+                        'amount' => $invoiceItem[$i]['amount'],
+                        'price' => $invoiceItem[$i]['price'],
+                        'subtotal' => $invoiceItem[$i]['subtotal'],
+                        'invoice_id' => $invoiceItem[$i]['invoice_id'],
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s')
+                    ]
+                ]);
+                $i++;
+            }
 
         });
     }

@@ -34,6 +34,5 @@ class CreatePurchaseInvoiceUseCase
         $purchaseInvoice = PurchaseInvoice::create($supplier, $pay_term, $date, $created, $status, $observations, $items);
 
         $this->repository->save($purchaseInvoice);
-
     }
 }
