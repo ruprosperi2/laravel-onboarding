@@ -9,7 +9,7 @@ interface PurchaseInvoiceRepository
 {
     public function findAll(): object;
 
-    public function find(Id $id): PurchaseInvoice;
+    public function find(Id $id): object;
 
     public function save(PurchaseInvoice $body): void;
 

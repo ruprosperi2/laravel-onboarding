@@ -6,13 +6,8 @@ use Illuminate\Support\Facades\DB;
 use Src\PurchaseInvoice\Domain\Contract\PurchaseInvoiceRepository;
 use Src\PurchaseInvoice\Domain\ValueObjects\Id;
 use Src\PurchaseInvoice\Domain\PurchaseInvoice;
-use Src\PurchaseInvoice\Domain\ValueObjects\Supplier;
-use Src\PurchaseInvoice\Domain\ValueObjects\Payterm;
-use Src\PurchaseInvoice\Domain\ValueObjects\DateCreation;
-use Src\PurchaseInvoice\Domain\ValueObjects\Created;
-use Src\PurchaseInvoice\Domain\ValueObjects\Status;
-use Src\PurchaseInvoice\Domain\ValueObjects\Observations;
-use Src\PurchaseInvoice\Domain\ValueObjects\Items;
+
+
 
 class PurchaseInvoiceMysqlRepository implements PurchaseInvoiceRepository
 {
@@ -21,7 +16,7 @@ class PurchaseInvoiceMysqlRepository implements PurchaseInvoiceRepository
         return $result = DB::table('invoices')->get();
     }
 
-    public function find(Id $id): PurchaseInvoice
+    public function find(Id $id): object
     {
         $data = DB::table('invoices')
             ->join('invoice_items', 'invoices.id', '=', 'invoice_items.invoice_id')
@@ -29,34 +24,7 @@ class PurchaseInvoiceMysqlRepository implements PurchaseInvoiceRepository
             ->where('invoices.id', '=', $id->value())
             ->get();
 
-       $arreglo = json_decode($data, TRUE);
-
-        $purchaseInvoiceItems = [];
-
-        for($i=0; $i<count($arreglo); $i++){
-            $purchaseInvoiceItems[$i]['name'] = $arreglo[$i]['name'];
-            $purchaseInvoiceItems[$i]['amount'] = $arreglo[$i]['amount'];
-            $purchaseInvoiceItems[$i]['price'] = $arreglo[$i]['price'];
-            $purchaseInvoiceItems[$i]['subtotal'] = $arreglo[$i]['subtotal'];
-            $purchaseInvoiceItems[$i]['invoice_id'] = $arreglo[$i]['invoice_id'];
-        }
-
-        $items = new Items($purchaseInvoiceItems);
-
-        $invoice = [];
-
-        foreach ($arreglo as $item){
-            $invoice['supplier'] =  new Supplier($item['supplier']);
-            $invoice['pay_term'] = new Payterm($item['pay_term']);
-            $invoice['date'] = new DateCreation($item['date']);
-            $invoice['created'] = new Created($item['created']);
-            $invoice['status'] = new Status($item['status']);
-            $invoice['observations'] = new Observations($item['observations']);
-            $invoice['items'] = $items;
-        }
-
-
-
+        return $data;
     }
 
     public function save(PurchaseInvoice $body): void

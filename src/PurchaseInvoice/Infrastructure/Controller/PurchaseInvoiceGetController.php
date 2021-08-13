@@ -4,6 +4,7 @@ namespace Src\PurchaseInvoice\Infrastructure\Controller;
 
 use Src\PurchaseInvoice\Application\FindPurchaseInvoiceUseCase;
 
+
 class PurchaseInvoiceGetController
 {
     private $useCase;
@@ -15,6 +16,6 @@ class PurchaseInvoiceGetController
 
     public function __invoke(int $id)
     {
-        $this->useCase->__invoke($id);
+        return$this->useCase->__invoke($id);
     }
 }
