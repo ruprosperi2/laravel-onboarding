@@ -2,6 +2,7 @@
 
 namespace Src\PurchaseInvoice\Application;
 
+use Illuminate\Support\Arr;
 use Src\PurchaseInvoice\Infrastructure\Repository\PurchaseInvoiceMysqlRepository;
 use Src\PurchaseInvoice\Domain\ValueObjects\Id;
 use Src\PurchaseInvoice\Domain\ValueObjects\Supplier;
@@ -32,7 +33,9 @@ class UpdatePurchaseInvoiceUseCase
 
         $row = $getPurchaseInvoice->__invoke($id);
 
-        $id = new Id($row['items'][0]['invoice_id']);
+        $idItems = head(Arr::pluck($row['items'], 'invoice_id'));
+
+        $id = new Id($idItems);
 
         $supplier = new  Supplier($body['supplier']);
         $pay_term = new Payterm($body['pay_term']);

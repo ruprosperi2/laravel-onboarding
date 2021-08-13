@@ -99,26 +99,30 @@ class PurchaseInvoiceMysqlRepository implements PurchaseInvoiceRepository
                     'updated_at' => date('Y-m-d H:i:s')
                 ]);
 
-            $getIdItemsDb = json_decode(DB::table('invoice_items')->pluck('id'), true); //Obtiene los Id de la base de datos
+            $getIdItemsDB = json_decode(DB::table('invoice_items')
+                ->where('invoice_id', '=', $id->value())
+                ->pluck('id'), true); //Obtiene los ID desde la base de datos
 
-            $idItems = Arr::pluck($body->items()->value(), 'id'); // filtra un arreglo con la columna seleccionada
+            $idItems = Arr::pluck($body->items()->value(), 'id'); //Obtiene los ID del arreglo
 
-            $arrayItem = [];
+            $arrayItem= [];
 
             for ($i = 0; $i < count($idItems); $i++) {
                 $arrayItem[$i] = $idItems[$i]->value();
             }
 
-            $notIn = array_values(array_diff($getIdItemsDb, $arrayItem)); //comprueba los datos de $getIdItemsDb con respecto a $arrayItem
+            //comparar
+
+            $notIn = array_values(array_diff($getIdItemsDB, $arrayItem)); //comprueba los datos de $getIdItemsDb con respecto a $arrayItem
 
             if (!empty($notIn)) {
 
-                foreach ($notIn as $id) {
-                    DB::transaction(function () use ($id) {
-                        DB::table('invoice_items')->where('id', '=', $id)->delete();
+                foreach ($notIn as $idDB) {
+                    DB::transaction(function () use ($idDB) {
+                        DB::table('invoice_items')->where('id', '=', $idDB)->delete();
                     });
                 }
-            }
+            } //Borral los elementos de la base de datos dependiendo del los Id's que estan llgenado
 
             $invoiceItem = [];
             $i = 0;
@@ -129,16 +133,17 @@ class PurchaseInvoiceMysqlRepository implements PurchaseInvoiceRepository
                 $invoiceItem[$i]['amount'] = $item['amount']->value();
                 $invoiceItem[$i]['price'] = $item['price']->value();
                 $invoiceItem[$i]['subtotal'] = $invoiceItem[$i]['amount'] * $invoiceItem[$i]['price'];
-                $invoiceItem[$i]['invoice_id'] = $id;
 
-                DB::table('invoice_items')
-                    ->where('id', $invoiceItem[$i]['id'])
-                    ->update(
+
+               DB::table('invoice_items')
+                    ->updateOrInsert(
+                        ['id' => $invoiceItem[$i]['id']],
                         [
                             'name' => $invoiceItem[$i]['name'],
                             'amount' => $invoiceItem[$i]['amount'],
                             'price' => $invoiceItem[$i]['price'],
                             'subtotal' => $invoiceItem[$i]['subtotal'],
+                            'invoice_id' => $id->value(),
                             'updated_at' => date('Y-m-d H:i:s')
                         ]
                     );
@@ -147,3 +152,6 @@ class PurchaseInvoiceMysqlRepository implements PurchaseInvoiceRepository
         });
     }
 }
+
+
+
