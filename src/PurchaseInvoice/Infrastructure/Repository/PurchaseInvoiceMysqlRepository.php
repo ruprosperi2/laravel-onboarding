@@ -43,32 +43,38 @@ class PurchaseInvoiceMysqlRepository implements PurchaseInvoiceRepository
                     'updated_at' => date('Y-m-d H:i:s')
                 ]
             );
-            $invoiceItem = [];
 
-            $i = 0;
-
-            foreach ($body->items()->value() as $item) {
-                $invoiceItem[$i]['name'] = $item['name']->value();
-                $invoiceItem[$i]['amount'] = $item['amount']->value();
-                $invoiceItem[$i]['price'] = $item['price']->value();
-                $invoiceItem[$i]['subtotal'] = $invoiceItem[$i]['amount'] * $invoiceItem[$i]['price'];
-                $invoiceItem[$i]['invoice_id'] = $id;
-
-                DB::table('invoice_items')->insert([
-                    [
-                        'name' => $invoiceItem[$i]['name'],
-                        'amount' => $invoiceItem[$i]['amount'],
-                        'price' => $invoiceItem[$i]['price'],
-                        'subtotal' => $invoiceItem[$i]['subtotal'],
-                        'invoice_id' => $invoiceItem[$i]['invoice_id'],
-                        'created_at' => date('Y-m-d H:i:s'),
-                        'updated_at' => date('Y-m-d H:i:s')
-                    ]
-                ]);
-                $i++;
-            }
+            $this->saveItems($id, $body->items()->value());
 
         });
+    }
+
+    private function saveItems(int $id, array $items): void
+    {
+        $invoiceItem = [];
+
+        $i = 0;
+
+        foreach ($items as $item) {
+            $invoiceItem[$i]['name'] = $item['name']->value();
+            $invoiceItem[$i]['amount'] = $item['amount']->value();
+            $invoiceItem[$i]['price'] = $item['price']->value();
+            $invoiceItem[$i]['subtotal'] = $invoiceItem[$i]['amount'] * $invoiceItem[$i]['price'];
+            $invoiceItem[$i]['invoice_id'] = $id;
+
+            DB::table('invoice_items')->insert([
+                [
+                    'name' => $invoiceItem[$i]['name'],
+                    'amount' => $invoiceItem[$i]['amount'],
+                    'price' => $invoiceItem[$i]['price'],
+                    'subtotal' => $invoiceItem[$i]['subtotal'],
+                    'invoice_id' => $invoiceItem[$i]['invoice_id'],
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s')
+                ]
+            ]);
+            $i++;
+        }
     }
 
     public function delete(Id $id): void
