@@ -19,11 +19,12 @@ class FindPurchaseInvoiceUseCase
     {
         $idPurchaseInvoice = new Id($id);
 
-        $rows=  json_decode($this->repository->find($idPurchaseInvoice), true);
+        $rows = json_decode($this->repository->find($idPurchaseInvoice), true);
 
         $purchaseInvoiceItems = [];
 
-        for($i=0; $i<count($rows); $i++){
+        for ($i = 0; $i < count($rows); $i++) {
+            $purchaseInvoiceItems[$i]['id'] = $rows[$i]['id'];
             $purchaseInvoiceItems[$i]['name'] = $rows[$i]['name'];
             $purchaseInvoiceItems[$i]['amount'] = $rows[$i]['amount'];
             $purchaseInvoiceItems[$i]['price'] = $rows[$i]['price'];
@@ -33,8 +34,8 @@ class FindPurchaseInvoiceUseCase
 
         $invoice = [];
 
-        foreach ($rows as $item){
-            $invoice['supplier'] =  $item['supplier'];
+        foreach ($rows as $item) {
+            $invoice['supplier'] = $item['supplier'];
             $invoice['pay_term'] = $item['pay_term'];
             $invoice['date'] = $item['date'];
             $invoice['created'] = $item['created'];
@@ -45,4 +46,5 @@ class FindPurchaseInvoiceUseCase
 
         return $invoice;
     }
+
 }

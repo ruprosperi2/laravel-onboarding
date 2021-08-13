@@ -23,6 +23,7 @@ class Items
         $rows = [];
 
         for ($i = 0; $i < count($items); $i++) {
+            $rows[$i]['id'] =  isset($items[$i]['id']) ? new Name($items[$i]['id']) : null;
             $rows[$i]['name'] = new Name($items[$i]['name']);
             $rows[$i]['amount'] = new Amount($items[$i]['amount']);
             $rows[$i]['price'] = new Price($items[$i]['price']);

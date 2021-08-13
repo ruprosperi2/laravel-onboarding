@@ -14,4 +14,6 @@ interface PurchaseInvoiceRepository
     public function save(PurchaseInvoice $body): void;
 
     public function delete(Id $id): void;
+
+    public function update(Id $id, PurchaseInvoice $body): void;
 }

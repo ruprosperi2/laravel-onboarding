@@ -22,6 +22,7 @@ use Src\PurchaseInvoice\Infrastructure\Controller\PurchaseInvoiceAllGetControlle
 use Src\PurchaseInvoice\Infrastructure\Controller\PurchaseInvoiceGetController;
 use Src\PurchaseInvoice\Infrastructure\Controller\PurchaseInvoicePostController;
 use Src\PurchaseInvoice\Infrastructure\Controller\PurchaseInvoiceDeleteController;
+use Src\PurchaseInvoice\Infrastructure\Controller\PurchaseInvoicePutController;
 
 
 use App\Http\Controllers\PurchaseOrderController\PurchaseOrderCreateController;
@@ -78,6 +79,8 @@ Route::get('purchaseInvoice', PurchaseInvoiceAllGetController::class);
 Route::get('purchaseInvoice/{id}', PurchaseInvoiceGetController::class);
 Route::post('purchaseInvoice', PurchaseInvoicePostController::class);
 Route::delete('purchaseInvoice/{id}', PurchaseInvoiceDeleteController::class);
+Route::put('purchaseInvoice/{id}', PurchaseInvoicePutController::class);
+
 
 
 
