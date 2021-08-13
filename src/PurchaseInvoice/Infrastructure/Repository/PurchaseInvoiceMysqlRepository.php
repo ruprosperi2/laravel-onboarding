@@ -106,9 +106,13 @@ class PurchaseInvoiceMysqlRepository implements PurchaseInvoiceRepository
             $notIn = array_values(array_diff($getIdItemsDb, $arrayItem)); //comprueba los datos de $getIdItemsDb con respecto a $arrayItem
 
             if (!empty($notIn)) {
-                DB::table('invoice_items')->where('id', '=', $id->value())->delete();
-            }
 
+                foreach ($notIn as $id) {
+                    DB::transaction(function () use ($id) {
+                        DB::table('invoice_items')->where('id', '=', $id)->delete();
+                    });
+                }
+            }
 
             $invoiceItem = [];
             $i = 0;
