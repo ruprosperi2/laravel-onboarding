@@ -5,7 +5,6 @@ namespace Src\PurchaseInvoice\Domain\ValueObjects;
 use Src\PurchaseInvoice\Domain\ValueObjects\Name;
 use Src\PurchaseInvoice\Domain\ValueObjects\Amount;
 use Src\PurchaseInvoice\Domain\ValueObjects\Price;
-use Src\PurchaseInvoice\Domain\ValueObjects\SubTotal;
 use Src\PurchaseInvoice\Domain\ValueObjects\Id;
 
 
@@ -27,8 +26,6 @@ class Items
             $rows[$i]['name'] = new Name($items[$i]['name']);
             $rows[$i]['amount'] = new Amount($items[$i]['amount']);
             $rows[$i]['price'] = new Price($items[$i]['price']);
-            $rows[$i]['subtotal'] = new SubTotal($items[$i]['subtotal']);
-            $rows[$i]['invoice_id'] = new Id($items[$i]['invoice_id']);
         }
 
         return $rows;

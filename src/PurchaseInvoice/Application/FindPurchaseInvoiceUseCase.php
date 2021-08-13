@@ -4,14 +4,7 @@ namespace Src\PurchaseInvoice\Application;
 
 use Src\PurchaseInvoice\Domain\Contract\PurchaseInvoiceRepository;
 use Src\PurchaseInvoice\Domain\ValueObjects\Id;
-use Src\PurchaseInvoice\Domain\ValueObjects\Items;
-use Src\PurchaseInvoice\Domain\ValueObjects\Supplier;
-use Src\PurchaseInvoice\Domain\ValueObjects\Payterm;
-use Src\PurchaseInvoice\Domain\ValueObjects\DateCreation;
-use Src\PurchaseInvoice\Domain\ValueObjects\Created;
-use Src\PurchaseInvoice\Domain\ValueObjects\Status;
-use Src\PurchaseInvoice\Domain\ValueObjects\Observations;
-use Src\PurchaseInvoice\Domain\PurchaseInvoice;
+
 
 class FindPurchaseInvoiceUseCase
 {
@@ -37,8 +30,6 @@ class FindPurchaseInvoiceUseCase
             $purchaseInvoiceItems[$i]['subtotal'] = $rows[$i]['subtotal'];
             $purchaseInvoiceItems[$i]['invoice_id'] = $rows[$i]['invoice_id'];
         }
-
-        //$items = new Items($purchaseInvoiceItems);
 
         $invoice = [];
 
