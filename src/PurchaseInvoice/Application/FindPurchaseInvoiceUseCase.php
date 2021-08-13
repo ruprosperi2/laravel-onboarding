@@ -43,17 +43,15 @@ class FindPurchaseInvoiceUseCase
         $invoice = [];
 
         foreach ($rows as $item){
-            $invoice['supplier'] =  new Supplier($item['supplier']);
-            $invoice['pay_term'] = new Payterm($item['pay_term']);
-            $invoice['date'] = new DateCreation($item['date']);
-            $invoice['created'] = new Created($item['created']);
-            $invoice['status'] = new Status($item['status']);
-            $invoice['observations'] = new Observations($item['observations']);
+            $invoice['supplier'] =  $item['supplier'];
+            $invoice['pay_term'] = $item['pay_term'];
+            $invoice['date'] = $item['date'];
+            $invoice['created'] = $item['created'];
+            $invoice['status'] = $item['status'];
+            $invoice['observations'] = $item['observations'];
             $invoice['items'] = $purchaseInvoiceItems;
         }
 
-        $purchaseInvoice = PurchaseInvoice::create( $invoice['supplier'], $invoice['pay_term'], $invoice['date'], $invoice['created'], $invoice['status'], $invoice['observations'], $invoice['items']);
-
-        return $purchaseInvoice;
+        return $invoice;
     }
 }

@@ -16,6 +16,6 @@ class PurchaseInvoiceGetController
 
     public function __invoke(int $id)
     {
-        return$this->useCase->__invoke($id);
+        return response($this->useCase->__invoke($id),200);
     }
 }
