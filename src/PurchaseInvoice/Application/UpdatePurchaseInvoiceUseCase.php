@@ -14,24 +14,27 @@ use Src\PurchaseInvoice\Domain\ValueObjects\Observations;
 use Src\PurchaseInvoice\Domain\ValueObjects\Items;
 use Src\PurchaseInvoice\Domain\PurchaseInvoice;
 
-use Src\PurchaseInvoice\Application\FindPurchaseInvoiceUseCase;
+use Src\PurchaseInvoice\Domain\FindPurchaseInvoice;
+
 
 
 class UpdatePurchaseInvoiceUseCase
 {
     private $repository;
+    private $getPurchaseInvoice;
 
     public function __construct(PurchaseInvoiceMysqlRepository $purchaseInvoiceMysqlRepository)
     {
         $this->repository = $purchaseInvoiceMysqlRepository;
+        $this->getPurchaseInvoice = new FindPurchaseInvoice($this->repository);
     }
 
     public function __invoke(int $id, $body)
     {
 
-        $getPurchaseInvoice = new FindPurchaseInvoiceUseCase($this->repository);
+        $purchaseInvoiceID = new Id($id);
 
-        $row = $getPurchaseInvoice->__invoke($id);
+        $row = $this->getPurchaseInvoice->__invoke($purchaseInvoiceID);
 
         $idItems = head(Arr::pluck($row['items'], 'invoice_id'));
 
